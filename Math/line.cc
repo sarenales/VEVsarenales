@@ -23,6 +23,14 @@ Line & Line::operator=(const Line & line) {
 
 void Line::setFromAtoB(const Vector3 & A, const Vector3 & B) {
 	/* =================== PUT YOUR CODE HERE ====================== */
+	
+	m_0 = A;
+	// ! A direction vector d
+	m_d = B-A;
+	
+	// normalizamos
+	
+	m_d.normalize();
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
