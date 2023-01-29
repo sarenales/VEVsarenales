@@ -62,9 +62,13 @@ float Line::paramDistance(const Vector3 & P) const {
 	// puntero a esa clase 
 	// P-this -> at(u0)
 
-	u0 = m_d*(P-m_O) / m_d*m_d; // producto escalar	
+	float d = m_d.dot(m_d);
 	
-	P-this -> at(u0);
+	if(d < Constants::distance_epsilon){
+		printf("Oye que es 0, el denominador no puede ser 0. \n");
+	}else{
+		res = m_d.dot(P-m_O)/d;
+	}
 
 	/* =================== END YOUR CODE HERE ====================== */
 	return res;
@@ -79,7 +83,7 @@ float Line::distance(const Vector3 & P) const {
 	float res = 0.0f;
 	/* =================== PUT YOUR CODE HERE ====================== */
 
-	//dist = 
+	res = (P -(m_O + paramDistance(P)*m_d)).length();
 
 	/* =================== END YOUR CODE HERE ====================== */
 	return res;
