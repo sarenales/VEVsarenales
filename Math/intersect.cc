@@ -18,13 +18,23 @@
 int BSpherePlaneIntersect(const BSphere *bs, Plane *pl) {
 	/* =================== PUT YOUR CODE HERE ====================== */
 	// proyecta sobre n, vector normal del plano
-	
 	float radio = 0.0;
-	radio = bs.getRadius();
 	
+	radio = bs->m_radius;
 	
+	Vector3 centro;
+	centro = bs->m_centre;
 	
-
+	float distancia = 0.0;
+	// distance calculates the distance of a point to a plane
+	distancia = pl->distance( );
+	
+	if(distancia <= radio){
+		return IINTERSECT;
+	}
+	else
+		return IREJECT;	
+	
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
@@ -37,6 +47,13 @@ int BSpherePlaneIntersect(const BSphere *bs, Plane *pl) {
 
 int  BBoxBBoxIntersect(const BBox *bba, const BBox *bbb ) {
 	/* =================== PUT YOUR CODE HERE ====================== */
+	
+	// caso disjuntos, no intersectan
+	if(bbb->m_min.x() > bba->m_max.x() || bbb->m_min.y() > bba->m_max.y() || bbb->m_min.z() > bba->m_max.z() 
+		|| bbb->m_max.x() < bba->m_min.x() || bbb->m_max.y() < bba->m_min.y() || bbb->m_max.z() < bba->m_min.z()){
+		return IREJECT;	
+	}
+	return IINTERSECT;
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
