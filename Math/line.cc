@@ -44,7 +44,7 @@ void Line::setFromAtoB(const Vector3 & A, const Vector3 & B) {
 Vector3 Line::at(float u) const {
 	Vector3 res;
 	/* =================== PUT YOUR CODE HERE ====================== */
-
+	// una recta en modo parametrico
 	res = m_O + u * m_d;
 	
 	/* =================== END YOUR CODE HERE ====================== */

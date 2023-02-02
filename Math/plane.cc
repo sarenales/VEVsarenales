@@ -37,7 +37,7 @@ int Plane::whichSide(const Vector3 & P) {
 float Plane::signedDistance(const Vector3 & P) {
 	if (!m_isNorm)
 		normalize();
-	return m_n.dot(P) - m_d;
+	return m_n.dot(P) - m_d;	// nX-d = 0 ec general del plano
 }
 
 float Plane::distance(const Vector3 & P) {

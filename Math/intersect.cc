@@ -17,6 +17,14 @@
 
 int BSpherePlaneIntersect(const BSphere *bs, Plane *pl) {
 	/* =================== PUT YOUR CODE HERE ====================== */
+	// proyecta sobre n, vector normal del plano
+	
+	float radio = 0.0;
+	radio = bs.getRadius();
+	
+	
+	
+
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
