@@ -6,7 +6,7 @@ Home -> default location
 
 a -> rotate object left (Y)
 d -> rotate object right (-Y)
-d -> rotate object down (X)
+w -> rotate object down (X)
 x -> move object up (-X)
 q/Q -> spin object left/right
 i/I -> move object along local X (-X)
