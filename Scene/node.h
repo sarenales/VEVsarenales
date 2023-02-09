@@ -125,6 +125,7 @@ private:
 	std::list<Node *> m_children; // pointers to children
 	GObject *m_gObject;  // 0 if not geometry
 	std::vector<Light *> m_lights; // 0 if not light
+	// vector de lucesn
 	ShaderProgram *m_shader; // 0 if not shader
 	Trfm3D *m_placement; // local transformation to parent node
 	Trfm3D *m_placementWC; // local transformation to world

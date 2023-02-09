@@ -26,8 +26,8 @@ int BSpherePlaneIntersect(const BSphere *bs, Plane *pl) {
 	centro = bs->m_centre;
 	
 	float distancia = 0.0;
-	// distance calculates the distance of a point to a plane
-	distancia = pl->distance( );
+	// distance me calcula la distancia del punto al plano
+	distancia = pl->distance();
 	
 	if(distancia <= radio){
 		return IINTERSECT;
@@ -66,6 +66,29 @@ int  BBoxBBoxIntersect(const BBox *bba, const BBox *bbb ) {
 
 int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	/* =================== PUT YOUR CODE HERE ====================== */
+
+	normalX = thePlane.m_n.x();
+	normalY = thePlane.m_n.y();
+	normalZ = thePlane.m_n.z();
+	
+	// eje x
+	if(theBBox->m_min.x())
+
+	else
+		
+	// eje y
+	if(theBBox->m_min.y())
+
+	else
+		
+	
+	// eje z
+	if(theBBox->m_min.z())
+
+	else
+		
+	return IINTERSECT;
+
 
 	/* =================== END YOUR CODE HERE ====================== */
 }

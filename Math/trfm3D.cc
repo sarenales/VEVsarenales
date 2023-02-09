@@ -82,6 +82,13 @@ Vector3 Trfm3D::transformVector(const Vector3 & V) const {
 	/*     |   d.x     d.y     d.z   w   | */   // 0
 
 	/* =================== END YOUR CODE HERE ====================== */
+	
+	float x,y,z;
+	
+	x = ( 1.5 * P.x) + ( 0 * P.y ) + ( 0 * P.z) + ( 1 );
+	y = ( 0 * P.x) + ( 1.5 * P.y ) + ( 0 * P.y) + ( 1 );
+	z = ( 0 * P.x) + ( 0 * P.y ) + ( 1.5 * P.z) + ( 1 );
+	
 	return res;
 }
 
@@ -435,6 +442,7 @@ void Trfm3D::setScale(float scale ) {
 
 void Trfm3D::setRotAxis(const Vector3 & V, const Vector3 & P, float angle ) {
 	/* =================== PUT YOUR CODE HERE ====================== */
+
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
