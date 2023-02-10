@@ -27,7 +27,7 @@ int BSpherePlaneIntersect(const BSphere *bs, Plane *pl) {
 	
 	float distancia = 0.0;
 	// distance me calcula la distancia del punto al plano
-	distancia = pl->distance();
+	distancia = pl->distance(centro);
 	
 	if(distancia <= radio){
 		return IINTERSECT;
@@ -67,26 +67,63 @@ int  BBoxBBoxIntersect(const BBox *bba, const BBox *bbb ) {
 int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	/* =================== PUT YOUR CODE HERE ====================== */
 
-	normalX = thePlane.m_n.x();
-	normalY = thePlane.m_n.y();
-	normalZ = thePlane.m_n.z();
+	// ecuacion del plano: ax+by+c+d=0 donde n=(a,b,c)
 	
-	// eje x
-	if(theBBox->m_min.x())
-
-	else
-		
-	// eje y
-	if(theBBox->m_min.y())
-
-	else
-		
+	// componentes de la normal
+	float aX = thePlane->m_n.x(); // X
+	float bY = thePlane->m_n.y(); // Y
+	float cZ = thePlane->m_n.z(); // Z
 	
-	// eje z
-	if(theBBox->m_min.z())
-
-	else
+	float xmin, xmax, ymin, ymax, zmin, zmax;
+	
+	// solo usaremos dos vertices del BBox
+	xmax = theBBox->m_max.x();
+	xmin = theBBox->m_min.x();
+	
+	ymax = theBBox->m_max.y();
+	ymin = theBBox->m_min.y();
+	
+	zmax = theBBox->m_max.z();
+	zmin = theBBox->m_min.z();
+	
+	// si estamos sentido negativo, cambiamos
+	// EJE X
+	if( aX < Constants::distance_epsilon){
+		xmin = theBBox->m_max.x();
+		xmax = theBBox->m_min.x();
+	}
 		
+	// EJE Y
+	if( bY < Constants::distance_epsilon){
+		ymin = theBBox->m_max.y();
+		ymax = theBBox->m_min.y();
+	}
+	
+	// EJE Z
+	if( cZ < Constants::distance_epsilon){
+		zmin = theBBox->m_max.z();
+		zmax = theBBox->m_min.z();
+	}
+	
+	Vector3 c, e;
+	// calculo el punto medio medio
+	c.x() = (xmax + xmin) *0.5;
+	c.y() = (ymax + ymin) *0.5;
+	c.z() = (zmax + zmin) *0.5;
+	
+	e.x() = xmax - c.x();
+	e.y() = ymax - c.y();
+	e.z() = zmax - c.z();
+	
+	
+	// calculamos la distancia entre el centro y el vertice max
+	float p = (e.x() * abs(aX) )+ (e.y() * abs(bY)) +(e.z() * abs(cZ)) ;
+	
+	// calcula la distancia entre el centro AABB y el plano
+	float d = thePlane->distance(c);
+	
+	if( abs(d) > p)
+		return IREJECT;
 	return IINTERSECT;
 
 

@@ -54,11 +54,11 @@ Vector3 Trfm3D::transformPoint(const Vector3 & P) const {
 	/*     | c1.z*s  c2.z*s  c3.z*s tr.z | */   //P.z
 	/*     |   d.x     d.y     d.z   w   | */   // 1
 
-	float x,y,z;
+	// float x,y,z;
 	
-	x = ( 1.5 * P.x) + ( 0 * P.y ) + ( 0 * P.z) + ( 1 );
-	y = ( 0 * P.x) + ( 1.5 * P.y ) + ( 0 * P.y) + ( 1 );
-	z = ( 0 * P.x) + ( 0 * P.y ) + ( 1.5 * P.z) + ( 1 );
+	// x = ( 1.5 * P.x) + ( 0 * P.y ) + ( 0 * P.z) + ( 1 );
+	// y = ( 0 * P.x) + ( 1.5 * P.y ) + ( 0 * P.y) + ( 1 );
+	// z = ( 0 * P.x) + ( 0 * P.y ) + ( 1.5 * P.z) + ( 1 );
 	
 	
 	/* =================== END YOUR CODE HERE ====================== */
@@ -83,11 +83,11 @@ Vector3 Trfm3D::transformVector(const Vector3 & V) const {
 
 	/* =================== END YOUR CODE HERE ====================== */
 	
-	float x,y,z;
+	// float x,y,z;
 	
-	x = ( 1.5 * P.x) + ( 0 * P.y ) + ( 0 * P.z) + ( 1 );
-	y = ( 0 * P.x) + ( 1.5 * P.y ) + ( 0 * P.y) + ( 1 );
-	z = ( 0 * P.x) + ( 0 * P.y ) + ( 1.5 * P.z) + ( 1 );
+	// x = ( 1.5 * P.x) + ( 0 * P.y ) + ( 0 * P.z) + ( 1 );
+	// y = ( 0 * P.x) + ( 1.5 * P.y ) + ( 0 * P.y) + ( 1 );
+	// z = ( 0 * P.x) + ( 0 * P.y ) + ( 1.5 * P.z) + ( 1 );
 	
 	return res;
 }
