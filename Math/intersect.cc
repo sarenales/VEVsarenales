@@ -85,26 +85,26 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	
 	zmax = theBBox->m_max.z();
 	zmin = theBBox->m_min.z();
-	
+	/*
 	// si estamos sentido negativo, cambiamos
-	// EJE X
-	if( aX < Constants::distance_epsilon){
-		xmin = theBBox->m_max.x();
-		xmax = theBBox->m_min.x();
-	}
+	// // EJE X
+	// if( aX < Constants::distance_epsilon){
+		// xmin = theBBox->m_max.x();
+		// xmax = theBBox->m_min.x();
+	// }
 		
-	// EJE Y
-	if( bY < Constants::distance_epsilon){
-		ymin = theBBox->m_max.y();
-		ymax = theBBox->m_min.y();
-	}
+	// // EJE Y
+	// if( bY < Constants::distance_epsilon){
+		// ymin = theBBox->m_max.y();
+		// ymax = theBBox->m_min.y();
+	// }
 	
-	// EJE Z
-	if( cZ < Constants::distance_epsilon){
-		zmin = theBBox->m_max.z();
-		zmax = theBBox->m_min.z();
-	}
-	
+	// // EJE Z
+	// if( cZ < Constants::distance_epsilon){
+		// zmin = theBBox->m_max.z();
+		// zmax = theBBox->m_min.z();
+	// }
+	*/
 	Vector3 c, e;
 	// calculo el punto medio medio
 	c.x() = (xmax + xmin) *0.5;
@@ -117,13 +117,18 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	
 	
 	// calculamos la distancia entre el centro y el vertice max
-	float p = (e.x() * abs(aX) )+ (e.y() * abs(bY)) +(e.z() * abs(cZ)) ;
+	float p = (e.x() * fabs(aX) )+ (e.y() * fabs(bY)) +(e.z() * fabs(cZ)) ;
 	
 	// calcula la distancia entre el centro AABB y el plano
-	float d = thePlane->distance(c);
+	float d = thePlane->signedDistance(c);
 	
-	if( abs(d) > p)
-		return IREJECT;
+	if( fabs(d) > p){
+		if (d>0){ //caso + dentro
+			return +IREJECT;
+		}else{ // caso - fuera
+			return -IREJECT;
+		}
+	}
 	return IINTERSECT;
 
 

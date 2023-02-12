@@ -383,14 +383,21 @@ void Node::updateGS() {
 // @@ TODO:
 // Draw a (sub)tree.
 //
+// RECORRIDO EN PROFUNDIDAD
 // These functions can be useful:
-//
-// RenderState *rs = RenderState::instance();
-//
+
+// clase contiene la informacion de la escena (modelview, camara, matricec de proyeccion, textura ...) luces no q son propias del nodo
+// RenderState *rs = RenderState::instance(); // con rs ya puedo hacer sus propias operaciones
+
+
+// meter a transformacion
 // rs->addTrfm(RenderState::modelview, T); // Add T transformation to modelview
+
+// lo mismo que glLoadItentity
 // rs->push(RenderState::modelview); // push current matrix into modelview stack
 // rs->pop(RenderState::modelview); // pop matrix from modelview stack to current
-//
+
+// para dibujar el objeto
 // gobj->draw(); // draw geometry object (gobj)
 //
 // Note:
@@ -406,6 +413,7 @@ void Node::draw() {
 	for(auto l : m_lights)
 		l->placeScene(rs->top(RenderState::modelview), *m_placementWC);
 
+	// esto a ver si es visible
 	if (m_isCulled) return;
 
 	// Set shader (save previous)
@@ -420,7 +428,23 @@ void Node::draw() {
 		BBoxGL::draw( m_containerWC);
 	}
 	/* =================== PUT YOUR CODE HERE ====================== */
+	// CUANDO SE TERMINE COMMIT MODO LOCAL
 
+	rs-> push(RenderState::modelview);
+	// T es la transformacion asociada al nodo
+	rs->addTrfm(RenderState::modelview, T);
+	
+	
+	// si el nodo tiene un objeto{
+	m_gObject->draw();		
+	// sino
+	for(auto n:m_children){
+		n->draw();
+		
+	}
+	rs->pop(RenderState::modelview); // pop matrix from modelview stack to current
+	
+	
 	/* =================== END YOUR CODE HERE ====================== */
 
 	if (prev_shader != 0) {

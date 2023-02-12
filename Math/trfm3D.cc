@@ -54,10 +54,14 @@ Vector3 Trfm3D::transformPoint(const Vector3 & P) const {
 	/*     | c1.z*s  c2.z*s  c3.z*s tr.z | */   //P.z
 	/*     |   d.x     d.y     d.z   w   | */   // 1
 
+
+	// m_c1, m_c2, m_c3 : vectores de rotacion
+	// m_scl : vector de escalado
+	// m_tr : vector de traslacion
 	
-	res.x() = ( 1.5 * P.x()) + ( 0 * P.y() ) + ( 0 * P.z()) + ( 1 );
-	res.y() = ( 0 * P.x()) + ( 1.5 * P.y() ) + ( 0 * P.y()) + ( 1 );
-	res.z() = ( 0 * P.x()) + ( 0 * P.y() ) + ( 1.5 * P.z()) + ( 1 );
+	res.x() = ( this->m_c1.x()*P.x() +  this->m_c2.x()*P.y()  +  this->m_c3.x()*P.z())*this->m_scl + ( this->m_tr.x() );
+	res.y() = ( this->m_c1.y()*P.x() +  this->m_c2.y()*P.y()  +  this->m_c3.y()*P.z())*this->m_scl + ( this->m_tr.y() );
+	res.z() = ( this->m_c1.z()*P.x() +  this->m_c2.z()*P.y()  +  this->m_c3.z()*P.z())*this->m_scl + ( this->m_tr.z() );
 	
 	
 	/* =================== END YOUR CODE HERE ====================== */
@@ -75,17 +79,18 @@ Vector3 Trfm3D::transformPoint(const Vector3 & P) const {
 Vector3 Trfm3D::transformVector(const Vector3 & V) const {
 	Vector3 res;
 	/* =================== PUT YOUR CODE HERE ====================== */
+	
 	/*     | c1.x*s  c2.x*s  c3.x*s tr.x | */   //P.x   	= P'.x
 	/* M = | c1.y*s  c2.y*s  c3.y*s tr.y | */   //P.y
 	/*     | c1.z*s  c2.z*s  c3.z*s tr.z | */   //P.z
 	/*     |   d.x     d.y     d.z   w   | */   // 0
+	
+	
+	res.x() = ( this->m_c1.x()*V.x() +  this->m_c2.x()*V.y()  +  this->m_c3.x()*V.z())*this->m_scl ;
+	res.y() = ( this->m_c1.y()*V.x() +  this->m_c2.y()*V.y()  +  this->m_c3.y()*V.z())*this->m_scl ;
+	res.z() = ( this->m_c1.z()*V.x() +  this->m_c2.z()*V.y()  +  this->m_c3.z()*V.z())*this->m_scl ;
 
-	/* =================== END YOUR CODE HERE ====================== */
-	
-	res.x() = ( 1.5 * V.x()) + ( 0 * V.y() ) + ( 0 * V.z()) + ( 0 );
-	res.y() = ( 0 * V.x()) + ( 1.5 * V.y() ) + ( 0 * V.y()) + ( 0 );
-	res.z() = ( 0 * V.x()) + ( 0 * V.y() ) + ( 1.5 * V.z()) + ( 0 );
-	
+	/* =================== END YOUR CODE HERE ====================== */	
 	return res;
 }
 
