@@ -271,12 +271,21 @@ void Node::addChild(Node *theChild) {
 	if (m_gObject) {
 		/* =================== PUT YOUR CODE HERE ====================== */
 		// node has a gObject, so print warning
-
+		
+		printf("Esto tiene un GObject (un objeto geometrico), no se puede anadir!!!");
 		/* =================== END YOUR CODE HERE ====================== */
 	} else {
 		/* =================== PUT YOUR CODE HERE ====================== */
 		// node does not have gObject, so attach child
-
+		
+		// m_children es un pointer a la lista de child
+		
+		// anadir en la lista de hijos
+		m_children.push_front(theChild);
+		
+		// anadir hijo ala lista de hijos del padre de this
+		theChild->m_parent = this;				
+		
 		/* =================== END YOUR CODE HERE ====================== */
 
 	}
@@ -430,19 +439,19 @@ void Node::draw() {
 	/* =================== PUT YOUR CODE HERE ====================== */
 	// CUANDO SE TERMINE COMMIT MODO LOCAL
 
-	rs-> push(RenderState::modelview);
+	// rs-> push(RenderState::modelview);
 	// T es la transformacion asociada al nodo
-	rs->addTrfm(RenderState::modelview, T);
+	// rs->addTrfm(RenderState::modelview, T);
 	
 	
 	// si el nodo tiene un objeto{
-	m_gObject->draw();		
+	// m_gObject->draw();		
 	// sino
-	for(auto n:m_children){
-		n->draw();
+	// for(auto n:m_children){
+		// n->draw();
 		
-	}
-	rs->pop(RenderState::modelview); // pop matrix from modelview stack to current
+	// }
+	// rs->pop(RenderState::modelview); // pop matrix from modelview stack to current
 	
 	
 	/* =================== END YOUR CODE HERE ====================== */
