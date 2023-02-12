@@ -444,7 +444,11 @@ void Trfm3D::setScale(float scale ) {
 
 void Trfm3D::setRotAxis(const Vector3 & V, const Vector3 & P, float angle ) {
 	/* =================== PUT YOUR CODE HERE ====================== */
-
+	//  T+p * R * T-p * P (<-) orden de multiplicacion!!
+	
+	setTrans(-1 * P);
+	setRotVec(V, angle);
+	setTrans(P);
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
