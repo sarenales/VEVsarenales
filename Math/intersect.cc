@@ -107,29 +107,43 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	*/
 	Vector3 c, e;
 	// calculo el punto medio medio
-	c.x() = (xmax + xmin) *0.5;
-	c.y() = (ymax + ymin) *0.5;
-	c.z() = (zmax + zmin) *0.5;
+	c.x() = (xmax + xmin) *0.5f;
+	c.y() = (ymax + ymin) *0.5f;
+	c.z() = (zmax + zmin) *0.5f;
+	// printf("el centro es (%f, %f, %f)\n", c.x(), c.y(), c.z());
+	
 	
 	e.x() = xmax - c.x();
 	e.y() = ymax - c.y();
 	e.z() = zmax - c.z();
-	
+	printf("e es (%f, %f, %f)\n", e.x(), e.y(), e.z());
 	
 	// calculamos la distancia entre el centro y el vertice max
-	float p = (e.x() * fabs(aX) )+ (e.y() * fabs(bY)) +(e.z() * fabs(cZ)) ;
+	float p = (e.x()*fabs(aX)) + (e.y()*fabs(bY)) + (e.z()*fabs(cZ)) ;
+	// printf("distancia entre el vertice y el centro %f \n", p);
+	
 	
 	// calcula la distancia entre el centro AABB y el plano
-	float d = thePlane->signedDistance(c);
+	// float d = thePlane->signedDistance(c);	
+	Vector3 normal;
+	normal.x() = aX;
+	normal.y() = bY;
+	normal.z() = cZ;
+	float d = c.dot(normal) - (thePlane->signedDistance(c)) ;	
+	// printf("distancia entre el plano y el centro %f \n", d);
 	
-	if( fabs(d) > p){
-		if (d>0){ //caso + dentro
-			return +IREJECT;
-		}else{ // caso - fuera
+	int ladoPosNeg = thePlane->whichSide(c); // -1 si esta lado negativo; 1 positivo y 0 esta sobre el plano
+
+	if(fabs(d)<=p){
+		return IINTERSECT;
+	}else{
+		if(ladoPosNeg == -1){
 			return -IREJECT;
+		}else if (ladoPosNeg == 1){
+			return IREJECT;
 		}
 	}
-	return IINTERSECT;
+	
 
 
 	/* =================== END YOUR CODE HERE ====================== */
