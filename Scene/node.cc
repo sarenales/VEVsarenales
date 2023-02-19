@@ -277,14 +277,13 @@ void Node::addChild(Node *theChild) {
 	} else {
 		/* =================== PUT YOUR CODE HERE ====================== */
 		// node does not have gObject, so attach child
+
+		// anadir hijo ala lista de hijos del padre de this
+		theChild->m_parent = this;	
 		
 		// m_children es un pointer a la lista de child
-		
 		// anadir en la lista de hijos
-		m_children.push_front(theChild);
-		
-		// anadir hijo ala lista de hijos del padre de this
-		theChild->m_parent = this;				
+		m_children.push_front(theChild);		
 		
 		/* =================== END YOUR CODE HERE ====================== */
 
@@ -453,9 +452,9 @@ void Node::draw() {
 	// CUANDO SE TERMINE COMMIT MODO LOCAL
 	
 	// lo mismo que glLoadItentity
-	rs-> push(RenderState::modelview);
+	rs->push(RenderState::modelview);
 	// meter a transformacion
-	rs->addTrfm(RenderState::modelview, m_placementWC);	// T -> transformacion asociada al nodo ->m_placementWC
+	rs->addTrfm(RenderState::modelview, m_placement);	// T -> transformacion asociada al nodo ->m_placement (local)
 	
 	// si el nodo es hoja
 	if (this->m_gObject == 0){

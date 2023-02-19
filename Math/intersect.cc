@@ -107,16 +107,16 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	*/
 	Vector3 c, e;
 	// calculo el punto medio medio
-	c.x() = (xmax + xmin) *0.5f;
-	c.y() = (ymax + ymin) *0.5f;
-	c.z() = (zmax + zmin) *0.5f;
+	c[0] = (xmax + xmin) *0.5f;
+	c[1] = (ymax + ymin) *0.5f;
+	c[2] = (zmax + zmin) *0.5f;
 	// printf("el centro es (%f, %f, %f)\n", c.x(), c.y(), c.z());
 	
 	
-	e.x() = xmax - c.x();
-	e.y() = ymax - c.y();
-	e.z() = zmax - c.z();
-	printf("e es (%f, %f, %f)\n", e.x(), e.y(), e.z());
+	e[0] = xmax - c.x();
+	e[1] = ymax - c.y();
+	e[2] = zmax - c.z();
+	//printf("e es (%f, %f, %f)\n", e.x(), e.y(), e.z());
 	
 	// calculamos la distancia entre el centro y el vertice max
 	float p = (e.x()*fabs(aX)) + (e.y()*fabs(bY)) + (e.z()*fabs(cZ)) ;
@@ -126,9 +126,9 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	// calcula la distancia entre el centro AABB y el plano
 	// float d = thePlane->signedDistance(c);	
 	Vector3 normal;
-	normal.x() = aX;
-	normal.y() = bY;
-	normal.z() = cZ;
+	normal[0]	= aX;
+	normal[1] = bY;
+	normal[2] = cZ;
 	float d = c.dot(normal) - (thePlane->signedDistance(c)) ;	
 	// printf("distancia entre el plano y el centro %f \n", d);
 	

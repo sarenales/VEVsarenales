@@ -59,9 +59,9 @@ Vector3 Trfm3D::transformPoint(const Vector3 & P) const {
 	// m_scl : vector de escalado
 	// m_tr : vector de traslacion
 	
-	res.x() = ( this->m_c1.x()*P.x() +  this->m_c2.x()*P.y()  +  this->m_c3.x()*P.z())*this->m_scl + ( this->m_tr.x() );
-	res.y() = ( this->m_c1.y()*P.x() +  this->m_c2.y()*P.y()  +  this->m_c3.y()*P.z())*this->m_scl + ( this->m_tr.y() );
-	res.z() = ( this->m_c1.z()*P.x() +  this->m_c2.z()*P.y()  +  this->m_c3.z()*P.z())*this->m_scl + ( this->m_tr.z() );
+	res[0] = ( m_c1[0]*P[0] +  m_c1[0]*P[1]  +  m_c1[0]*P[2] )*m_scl + ( m_tr[0] );
+	res[1] = ( m_c1[1]*P[0] +  m_c1[1]*P[1]  +  m_c1[1]*P[2] )*m_scl + ( m_tr[1] );
+	res[2] = ( m_c1[2]*P[0] +  m_c1[2]*P[1]  +  m_c1[2]*P[2] )*m_scl + ( m_tr[2] );
 	
 	
 	/* =================== END YOUR CODE HERE ====================== */
@@ -85,11 +85,10 @@ Vector3 Trfm3D::transformVector(const Vector3 & V) const {
 	/*     | c1.z*s  c2.z*s  c3.z*s tr.z | */   //P.z
 	/*     |   d.x     d.y     d.z   w   | */   // 0
 	
+	res[0] = ( m_c1[0]*V[0] +  m_c1[0]*V[1]  +  m_c1[0]*V[2] )*m_scl ;
+	res[1] = ( m_c1[1]*V[0] +  m_c1[1]*V[1]  +  m_c1[1]*V[2] )*m_scl ;
+	res[2] = ( m_c1[2]*V[0] +  m_c1[2]*V[1]  +  m_c1[2]*V[2] )*m_scl ;
 	
-	res.x() = ( this->m_c1.x()*V.x() +  this->m_c2.x()*V.y()  +  this->m_c3.x()*V.z())*this->m_scl ;
-	res.y() = ( this->m_c1.y()*V.x() +  this->m_c2.y()*V.y()  +  this->m_c3.y()*V.z())*this->m_scl ;
-	res.z() = ( this->m_c1.z()*V.x() +  this->m_c2.z()*V.y()  +  this->m_c3.z()*V.z())*this->m_scl ;
-
 	/* =================== END YOUR CODE HERE ====================== */	
 	return res;
 }

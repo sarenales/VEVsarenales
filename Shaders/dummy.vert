@@ -10,5 +10,5 @@ varying vec4 f_color;
 void main() {
 
 	f_color = vec4(0,1,0,1);
-	gl_Position = cameraToClipMatrix * modelToCameraMatrix *(v_position, 1); // ahora a sistema ref camara y con click
+	gl_Position = cameraToClipMatrix * modelToCameraMatrix *vec4(v_position, 1.0); // ahora a sistema ref camara y con click
 }
