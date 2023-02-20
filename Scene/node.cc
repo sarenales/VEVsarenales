@@ -283,7 +283,9 @@ void Node::addChild(Node *theChild) {
 		
 		// m_children es un pointer a la lista de child
 		// anadir en la lista de hijos
-		m_children.push_front(theChild);		
+		m_children.push_front(theChild);	
+
+		theChild->updateGS();		
 		
 		/* =================== END YOUR CODE HERE ====================== */
 
@@ -370,12 +372,25 @@ void Node::updateBB () {
 void Node::updateWC() {
 	/* =================== PUT YOUR CODE HERE ====================== */
 
+	// funcion para construir m_placementWC
 	// actualizar las trasnformaciones del padre del nodo
 	
+	// si es nodo raiz entonces
+	if(this->m_parent == 0){
+		// igual que la transformacion local
+		this->m_placementWC->clone(this->m_placement);
+	}// si es nodo intermedio o nodo hoja
+	else{
+		this->m_placementWC->clone(this->m_parent->m_placementWC);
+		this->m_placementWC->add(this->m_placement);
+		for(auto & theChild : m_children) {
+			theChild->updateWC();
+		}
+	}
 	
-	// if este_nodo_es_la_raiz{
+	// si este_nodo_es_la_raiz{
 		// m_placementWC<- this->placement;
-	// else	// composicion de transformacion la de su padre con la localT
+	// sino	// composicion de transformacion la de su padre con la localT
 		// m_placementWC <- composicion de transformacion la del su padre con la local
 		// if(m_gObject == 0){ // NODO INTERMEDIO
 			// for(auto & theChild : m_children) {
@@ -396,7 +411,7 @@ void Node::updateWC() {
 
 void Node::updateGS() {
 	/* =================== PUT YOUR CODE HERE ====================== */
-
+	this->updateWC();
 	/* =================== END YOUR CODE HERE ====================== */
 }
 
@@ -449,23 +464,24 @@ void Node::draw() {
 		BBoxGL::draw( m_containerWC);
 	}
 	/* =================== PUT YOUR CODE HERE ====================== */
-	// CUANDO SE TERMINE COMMIT MODO LOCAL
+	// CUANDO SE TERMINE COMMIT MODO GLOBAL
 	
-	// lo mismo que glLoadItentity
-	rs->push(RenderState::modelview);
-	// meter a transformacion
-	rs->addTrfm(RenderState::modelview, m_placement);	// T -> transformacion asociada al nodo ->m_placement (local)
 	
 	// si el nodo es hoja
 	if (this->m_gObject){
+		// lo mismo que glLoadItentity
+		rs->push(RenderState::modelview);
+		// meter a transformacion
+		rs->addTrfm(RenderState::modelview, m_placement);	// T -> transformacion asociada al nodo ->m_placement (local)
 		// para dibujar el objeto
 		m_gObject->draw(); // draw geometry object (gobj)
+		rs->pop(RenderState::modelview); // pop matrix from modelview stack to current
 	}else{
 		for(auto n:m_children){
 			n->draw();
 		}
 	}
-	rs->pop(RenderState::modelview); // pop matrix from modelview stack to current
+	
 	
 	
 	/* =================== END YOUR CODE HERE ====================== */

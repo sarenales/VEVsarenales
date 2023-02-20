@@ -59,9 +59,9 @@ Vector3 Trfm3D::transformPoint(const Vector3 & P) const {
 	// m_scl : vector de escalado
 	// m_tr : vector de traslacion
 	
-	res[0] = ( m_c1[0]*P[0] +  m_c1[0]*P[1]  +  m_c1[0]*P[2] )*m_scl + ( m_tr[0] );
-	res[1] = ( m_c1[1]*P[0] +  m_c1[1]*P[1]  +  m_c1[1]*P[2] )*m_scl + ( m_tr[1] );
-	res[2] = ( m_c1[2]*P[0] +  m_c1[2]*P[1]  +  m_c1[2]*P[2] )*m_scl + ( m_tr[2] );
+	res[0] = ( m_c1[0]*P[0] +  m_c2[0]*P[1]  +  m_c3[0]*P[2] )*m_scl + ( m_tr[0] );
+	res[1] = ( m_c1[1]*P[0] +  m_c2[1]*P[1]  +  m_c3[1]*P[2] )*m_scl + ( m_tr[1] );
+	res[2] = ( m_c1[2]*P[0] +  m_c2[2]*P[1]  +  m_c3[2]*P[2] )*m_scl + ( m_tr[2] );
 	
 	
 	/* =================== END YOUR CODE HERE ====================== */
@@ -85,9 +85,9 @@ Vector3 Trfm3D::transformVector(const Vector3 & V) const {
 	/*     | c1.z*s  c2.z*s  c3.z*s tr.z | */   //P.z
 	/*     |   d.x     d.y     d.z   w   | */   // 0
 	
-	res[0] = ( m_c1[0]*V[0] +  m_c1[0]*V[1]  +  m_c1[0]*V[2] )*m_scl ;
-	res[1] = ( m_c1[1]*V[0] +  m_c1[1]*V[1]  +  m_c1[1]*V[2] )*m_scl ;
-	res[2] = ( m_c1[2]*V[0] +  m_c1[2]*V[1]  +  m_c1[2]*V[2] )*m_scl ;
+	res[0] = ( m_c1[0]*V[0] +  m_c2[0]*V[1]  +  m_c3[0]*V[2] )*m_scl ;
+	res[1] = ( m_c1[1]*V[0] +  m_c2[1]*V[1]  +  m_c3[1]*V[2] )*m_scl ;
+	res[2] = ( m_c1[2]*V[0] +  m_c2[2]*V[1]  +  m_c3[2]*V[2] )*m_scl ;
 	
 	/* =================== END YOUR CODE HERE ====================== */	
 	return res;
@@ -445,9 +445,9 @@ void Trfm3D::setRotAxis(const Vector3 & V, const Vector3 & P, float angle ) {
 	/* =================== PUT YOUR CODE HERE ====================== */
 	//  T+p * R * T-p * P (<-) orden de multiplicacion!!
 	
-	setTrans(-1 * P);
+	setTrans((-1.0f)*P);
 	setRotVec(V, angle);
-	setTrans(P);
+	addTrans(P);
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
