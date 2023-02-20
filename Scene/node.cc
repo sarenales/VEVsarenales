@@ -348,6 +348,25 @@ void Node::propagateBBRoot() {
 
 void Node::updateBB () {
 	/* =================== PUT YOUR CODE HERE ====================== */
+	//Precondicion: m_placement tiene que estar bien hecha y los BBox de los hijos tambn bien adaptados.
+	// m_containerWC -> BBox in world coordinates
+	
+	// si es nodo hoja (objeto)
+	if(m_gObject){
+		BBox bb;
+		bb = m_gObject->getContainer();
+		//bb = transform(this->m_placementWC);
+		
+	} // intermedio
+	else{
+		this->m_containerWC->init();
+		// union de sus hijos recorriendo
+		for(auto & theChild : m_children) {
+			this->m_containerWC->include(theChild->m_containerWC);
+		}
+	}
+
+
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
