@@ -457,7 +457,7 @@ void Node::draw() {
 	rs->addTrfm(RenderState::modelview, m_placement);	// T -> transformacion asociada al nodo ->m_placement (local)
 	
 	// si el nodo es hoja
-	if (this->m_gObject == 0){
+	if (this->m_gObject){
 		// para dibujar el objeto
 		m_gObject->draw(); // draw geometry object (gobj)
 	}else{
