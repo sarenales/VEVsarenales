@@ -353,8 +353,8 @@ void Node::updateBB () {
 	
 	// si es nodo hoja (objeto)
 	if(m_gObject){
-		BBox bb;
-		bb = m_gObject->getContainer();
+		// BBox bb;
+		// bb = m_gObject->getContainer();
 		//bb = transform(this->m_placementWC);
 		
 	} // intermedio
@@ -491,7 +491,7 @@ void Node::draw() {
 		// lo mismo que glLoadItentity
 		rs->push(RenderState::modelview);
 		// meter a transformacion
-		rs->addTrfm(RenderState::modelview, m_placement);	// T -> transformacion asociada al nodo ->m_placement (local)
+		rs->addTrfm(RenderState::modelview, m_placementWC);	// T -> transformacion asociada al nodo ->m_placement (local)
 		// para dibujar el objeto
 		m_gObject->draw(); // draw geometry object (gobj)
 		rs->pop(RenderState::modelview); // pop matrix from modelview stack to current
@@ -543,7 +543,9 @@ void Node::frustumCull(Camera *cam) {
 const Node *Node::checkCollision(const BSphere *bsph) const {
 	if (!m_checkCollision) return 0;
 	/* =================== PUT YOUR CODE HERE ====================== */
-
+	
+	
+	
 	return 0; /* No collision */
    /* =================== END YOUR CODE HERE ====================== */
 }
