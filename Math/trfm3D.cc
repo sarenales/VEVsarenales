@@ -446,7 +446,7 @@ void Trfm3D::setRotAxis(const Vector3 & V, const Vector3 & P, float angle ) {
 	//  T+p * R * T-p * P (<-) orden de multiplicacion!!
 	
 	setTrans(P);
-	setRotVec(V, angle);
+	addRotVec(V, angle);
 	addTrans(-1*P);
 
 	/* =================== END YOUR CODE HERE ====================== */

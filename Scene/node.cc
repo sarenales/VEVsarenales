@@ -316,6 +316,13 @@ void Node::detach() {
 void Node::propagateBBRoot() {
 	/* =================== PUT YOUR CODE HERE ====================== */
 
+	// desde el nodo en el que este hasta la raiz, ir llamando a su padre ->transformar
+	// solo cambiamos el subgrafo al que pertenece sin irse a los otros nodos
+	this->updateBB();
+	if(this->m_parent)
+		this->m_parent->propagateBBRoot();
+	
+
 	/* =================== END YOUR CODE HERE ====================== */
 }
 
@@ -355,7 +362,16 @@ void Node::updateBB () {
 	if(m_gObject){
 		// BBox bb;
 		// bb = m_gObject->getContainer();
-		//bb = transform(this->m_placementWC);
+		// bb = transform(this->m_placementWC);
+		//this->m_containerWC->clone(bb);
+		
+		
+		// primero clonamos el container del objeto
+		this->m_containerWC->clone(m_gObject->getContainer());
+		
+		// transformarlo con la matriz m_placementWC
+		this->m_containerWC->transform(m_placementWC);
+		
 		
 	} // intermedio
 	else{
@@ -431,6 +447,11 @@ void Node::updateWC() {
 void Node::updateGS() {
 	/* =================== PUT YOUR CODE HERE ====================== */
 	this->updateWC();
+	
+	// si es padre propagateBBRoot
+	if(this->m_parent)
+		this->m_parent->propagateBBRoot();
+	
 	/* =================== END YOUR CODE HERE ====================== */
 }
 
@@ -543,6 +564,8 @@ void Node::frustumCull(Camera *cam) {
 const Node *Node::checkCollision(const BSphere *bsph) const {
 	if (!m_checkCollision) return 0;
 	/* =================== PUT YOUR CODE HERE ====================== */
+	
+	int interseccion = BSphereBBoxIntersect(bsph, this->m_containerWC);
 	
 	
 	
