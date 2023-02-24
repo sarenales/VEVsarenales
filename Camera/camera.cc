@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cmath>
+#include <math.h>
 #include "camera.h"
 #include "constants.h"
 #include "tools.h"
@@ -143,6 +144,8 @@ void OrthographicCamera::updateProjection() {
 void PerspectiveCamera::updateProjection() {
 	/* =================== PUT YOUR CODE HERE ====================== */
 
+	
+
 	/* =================== END YOUR CODE HERE ====================== */
 	updateFrustumPlanes();
 }
@@ -172,7 +175,25 @@ void  Camera::lookAt(const Vector3 & E,
 					 const Vector3 & at,
 					 const Vector3 & up) {
 	/* =================== PUT YOUR CODE HERE ====================== */
+	
+	Vector3 Zc, Xc, Yc;
+	
+	// calculo vector D, Z de la camara
+	float mod;
+	mod = sqrtf( (pow((E[0]-at[0]),2) + pow((E[1]-at[1]),2) + pow((E[2]-at[2]),2)));
+	Zc = (E-at)/ (mod); 
+	
+	// calculo vector R, X de la camara
+	mod = sqrtf( (pow((Zc[0]-up[0]),2) + pow((Zc[1]-up[1]),2) + pow((Zc[2]-up[2]),2)));
+	Xc = (Zc.dot(up))/(mod);
 
+	// calculo vector U, Y de la camara
+	Yc = Zc.dot(Xc);
+	
+	m_E = E;
+	m_R = Xc;
+	m_U = Yc;
+	m_D = Zc;
 	/* =================== END YOUR CODE HERE ====================== */
 	setViewTrfm();
 }

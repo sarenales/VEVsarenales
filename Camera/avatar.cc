@@ -48,15 +48,17 @@ bool Avatar::advance(float step) {
 	// predecimos donde va a estar la camara
 	// mirar si hay choche, si no hay avanzamos
 	
-	// this->m_cam.savePosition();	
-	// if(rootNode.checkCollision(this->m_bsph)){
-		// si estamos modo walk
-		// if(this->m_walk){
-			// this->m_cam.walk(step);
-		// }else{
-			// this->m_cam.fly(step);
-		// }
-	// }
+
+	
+	this->m_cam.savePosition();	
+	if(rootNode.checkCollision(this->m_bsph)){
+		si estamos modo walk
+		if(this->m_walk){
+			this->m_cam->walk(step);
+		}else{
+			this->m_cam->fly(step);
+		}
+	}
 
 	/* =================== END YOUR CODE HERE ====================== */
 	// no collision

@@ -448,7 +448,7 @@ void Node::updateGS() {
 	/* =================== PUT YOUR CODE HERE ====================== */
 	this->updateWC();
 	
-	// si es padre propagateBBRoot
+	// si es padre --> propagateBBRoot
 	if(this->m_parent)
 		this->m_parent->propagateBBRoot();
 	
