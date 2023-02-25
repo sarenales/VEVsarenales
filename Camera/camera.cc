@@ -150,7 +150,7 @@ void PerspectiveCamera::updateProjection() {
 	
 	m_top = m_near * (tan(m_fovy/2));
 	m_bottom = (-1)*m_top;
-	m_right = m_aspectRatio * m_top;
+	m_right = m_aspectRatio*m_top;
 	m_left = (-1)*m_right;
 	
 
@@ -187,18 +187,15 @@ void  Camera::lookAt(const Vector3 & E,
 	/* =================== PUT YOUR CODE HERE ====================== */
 	
 	Vector3 Zc, Xc, Yc;
-	
+	float modi;
 	// calculo vector D, Z de la camara
-	float mod;
-	mod = sqrtf( (  pow((E[0]-at[0]),2) + pow((E[1]-at[1]),2) + pow((E[2]-at[2]),2)   )  );
-	Zc = (E-at)/mod; 
-	
+	modi = sqrtf( (  pow((E[0]-at[0]),2) + pow((E[1]-at[1]),2) + pow((E[2]-at[2]),2)   )  );
+	Zc = (E-at)/modi;
 	// calculo vector R, X de la camara
-	mod = sqrtf( (   pow((Zc[0]-up[0]),2) + pow((Zc[1]-up[1]),2) + pow((Zc[2]-up[2]),2)  )  );
-	Xc = Zc.cross(up)/mod;
-
+	modi = sqrtf( (   pow((Zc[0]-up[0]),2) + pow((Zc[1]-up[1]),2) + pow((Zc[2]-up[2]),2)  )  );
+	Xc = up.cross(Zc)/modi;
 	// calculo vector U, Y de la camara
-	Yc = Xc.cross(Zc);
+	Yc = Zc.cross(Xc);
 	
 	m_E = E;
 	m_R = Xc;

@@ -572,15 +572,16 @@ const Node *Node::checkCollision(const BSphere *bsph) const {
 		// si no colisiona
 		// colisiona-> miramos sus hijos
 	if (this->m_gObject == 0){
-		//si no intersecta
-		if(BSphereBBoxIntersect(bsph, this->m_containerWC) == IREJECT){
+		//si intersecta
+		if(BSphereBBoxIntersect(bsph, this->m_containerWC) == IINTERSECT){
 			for(auto & theChild : m_children) {
-				theChild->checkCollision(bsph); 
+				if(theChild->checkCollision(bsph) != IINTERSECT)
+					return theChild;
 			}	
 		}
-	}else if(this->m_gObject){ // caso 
+	}else if(this->m_gObject){ // caso hijo 
 		if(BSphereBBoxIntersect(bsph, this->m_containerWC) == IINTERSECT){
-			return this;
+			return this; // si hay colision devolvemos directamente el hijo
 		}
 	}
 	
