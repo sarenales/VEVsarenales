@@ -50,9 +50,10 @@ bool Avatar::advance(float step) {
 	
 
 	
-	this->m_cam.savePosition();	
-	if(rootNode.checkCollision(this->m_bsph)){
-		si estamos modo walk
+	// this->m_cam.savePosition();	
+	
+	if(rootNode->checkCollision(this->m_bsph)){
+		//si estamos modo walk
 		if(this->m_walk){
 			this->m_cam->walk(step);
 		}else{

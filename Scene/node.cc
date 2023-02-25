@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cassert>
+#include <cmath>
 #include "node.h"
 #include "nodeManager.h"
 #include "intersect.h"
@@ -565,9 +566,23 @@ const Node *Node::checkCollision(const BSphere *bsph) const {
 	if (!m_checkCollision) return 0;
 	/* =================== PUT YOUR CODE HERE ====================== */
 	
-	int interseccion = BSphereBBoxIntersect(bsph, this->m_containerWC);
+	// int interseccion = BSphereBBoxIntersect(bsph, this->m_containerWC);
 	
-	
+	// si es nodo raiz
+		// si no colisiona
+		// colisiona-> miramos sus hijos
+	if (this->m_gObject == 0){
+		//si no intersecta
+		if(BSphereBBoxIntersect(bsph, this->m_containerWC) == IREJECT){
+			for(auto & theChild : m_children) {
+				theChild->checkCollision(bsph); 
+			}	
+		}
+	}else if(this->m_gObject){ // caso 
+		if(BSphereBBoxIntersect(bsph, this->m_containerWC) == IINTERSECT){
+			return this;
+		}
+	}
 	
 	return 0; /* No collision */
    /* =================== END YOUR CODE HERE ====================== */

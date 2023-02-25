@@ -143,9 +143,19 @@ void OrthographicCamera::updateProjection() {
 
 void PerspectiveCamera::updateProjection() {
 	/* =================== PUT YOUR CODE HERE ====================== */
-
+	
+	// proyeccion en perspectiva
+	
+	// poner que matriz va a guardar en funcion de los valores que se le pasa
+	
+	m_top = m_near * (tan(m_fovy/2));
+	m_bottom = (-1)*m_top;
+	m_right = m_aspectRatio * m_top;
+	m_left = (-1)*m_right;
 	
 
+	m_projTrfm->setFrustum(m_left, m_right, m_bottom, m_top, m_near, m_far);
+	
 	/* =================== END YOUR CODE HERE ====================== */
 	updateFrustumPlanes();
 }
@@ -180,22 +190,23 @@ void  Camera::lookAt(const Vector3 & E,
 	
 	// calculo vector D, Z de la camara
 	float mod;
-	mod = sqrtf( (pow((E[0]-at[0]),2) + pow((E[1]-at[1]),2) + pow((E[2]-at[2]),2)));
-	Zc = (E-at)/ (mod); 
+	mod = sqrtf( (  pow((E[0]-at[0]),2) + pow((E[1]-at[1]),2) + pow((E[2]-at[2]),2)   )  );
+	Zc = (E-at)/mod; 
 	
 	// calculo vector R, X de la camara
-	mod = sqrtf( (pow((Zc[0]-up[0]),2) + pow((Zc[1]-up[1]),2) + pow((Zc[2]-up[2]),2)));
-	Xc = (Zc.dot(up))/(mod);
+	mod = sqrtf( (   pow((Zc[0]-up[0]),2) + pow((Zc[1]-up[1]),2) + pow((Zc[2]-up[2]),2)  )  );
+	Xc = Zc.cross(up)/mod;
 
 	// calculo vector U, Y de la camara
-	Yc = Zc.dot(Xc);
+	Yc = Xc.cross(Zc);
 	
 	m_E = E;
 	m_R = Xc;
 	m_U = Yc;
 	m_D = Zc;
 	/* =================== END YOUR CODE HERE ====================== */
-	setViewTrfm();
+	setViewTrfm(); // esto contruye la modeliew
+	// se adapta el frustrum
 }
 
 ////////////////////////////////////////////////////////////7
