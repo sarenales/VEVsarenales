@@ -320,8 +320,9 @@ void Node::propagateBBRoot() {
 	// desde el nodo en el que este hasta la raiz, ir llamando a su padre ->transformar
 	// solo cambiamos el subgrafo al que pertenece sin irse a los otros nodos
 	this->updateBB();
-	if(this->m_parent)
+	if(this->m_parent){
 		this->m_parent->propagateBBRoot();
+	}	
 	
 
 	/* =================== END YOUR CODE HERE ====================== */
@@ -379,7 +380,7 @@ void Node::updateBB () {
 		this->m_containerWC->init();
 		// union de sus hijos recorriendo
 		for(auto & theChild : m_children) {
-			this->m_containerWC->include(theChild->m_containerWC);
+			this->m_containerWC->include(theChild->m_containerWC); //  Change BBox so that it also includes BBox B
 		}
 	}
 
@@ -419,10 +420,12 @@ void Node::updateWC() {
 	else{
 		this->m_placementWC->clone(this->m_parent->m_placementWC);
 		this->m_placementWC->add(this->m_placement);
-		for(auto & theChild : m_children) {
-			theChild->updateWC();
-		}
+		
 	}
+	for(auto & theChild : m_children) {
+			theChild->updateWC();
+	}
+	this->updateBB();
 	
 	// si este_nodo_es_la_raiz{
 		// m_placementWC<- this->placement;
@@ -579,7 +582,7 @@ const Node *Node::checkCollision(const BSphere *bsph) const {
 					return theChild;
 			}	
 		}
-	}else if(this->m_gObject){ // caso hijo 
+	}else{ // caso hijo 
 		if(BSphereBBoxIntersect(bsph, this->m_containerWC) == IINTERSECT){
 			return this; // si hay colision devolvemos directamente el hijo
 		}
