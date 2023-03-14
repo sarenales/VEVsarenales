@@ -8,8 +8,8 @@ struct Vbo_vertex {
 	GLfloat v[3];
 	GLfloat n[3];
 	GLfloat t[2];
-	GLfloat tbn_t[3];
-	GLfloat tbn_b[3];
+	GLfloat tbn_t[3]; // tangente
+	GLfloat tbn_b[3]; // bitangente
 };
 
 #define VBO_BUFFER_OFFSET(i) ((char *)NULL + (i))
@@ -85,7 +85,7 @@ void TriangleMeshGL::init_opengl_vbo(TriangleMesh * thisMesh) {
 	// unbind VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	// unbind VAO
-	glBindVertexArray(0);
+	glBindVertexArray(0); // rellena
 	delete [] buffer;
 	thisMesh->m_vbo_uptodate = 1;
 }
@@ -113,7 +113,7 @@ void TriangleMeshGL::draw(TriangleMesh * thisMesh) {
 		rs->setBackMaterial(thisMesh->m_materialBack);
 	}
 
-	shaderProgram->beforeDraw();
+	shaderProgram->beforeDraw(); // crear las variables que va a usar en shader
 
 	glBindVertexArray(thisMesh->m_vao_id);
 	glDrawArrays(GL_TRIANGLES,

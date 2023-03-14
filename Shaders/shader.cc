@@ -195,7 +195,10 @@ template<class V> void ShaderProgram::send_uniform(const std::string & uname, co
 	}
 }
 
-void ShaderProgram::beforeDraw() {
+void ShaderProgram::beforeDraw() { 
+// crear serie de variables para q los shader se enteren de lo que van a manejar (informacion del vetice y de la escena)
+// informacion del vertice: atributos , v.uniformes (luces, matrices...), varying
+
 
 	Material *mat;
 	Texture *tex;
@@ -241,6 +244,12 @@ void ShaderProgram::beforeDraw() {
 	}
 	this->send_uniform("active_lights_n", i);
 
+	// ...
+	if (this->has_capability("sc")) { // si este shader tiene la capacidad sc, me pondra en la variable sc el valor.
+		this->send_uniform("sc", rs->getSc());
+	}
+
+
 	mat = rs->getFrontMaterial();
 	if (mat != 0) {
 		this->send_uniform("theMaterial.diffuse", mat->getDiffuse());
@@ -262,6 +271,7 @@ void ShaderProgram::beforeDraw() {
 			}
 		}
 	}
+	
 }
 
 void ShaderProgram::print() const {

@@ -121,12 +121,13 @@
     "node" : {
         "name" : "root",
         "trfm" : [ { "trans" : [0, -10, -100] } ],
-        "shader" : "dummy_sc",
+        "shader" : "dummy",
         "children" : [
             {
                 "name" : "smooth",
                 "gObj" : "./obj/spheres/smooth.obj",
                 "trfm" : [ { "trans" : [-20, 0, 0] } ]
+                "shader" : "dummy_sc"
             },
             {
                 "name" : "chapel",

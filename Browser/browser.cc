@@ -6,6 +6,7 @@
 #include "scenes.h"
 #include "skybox.h"
 
+// PROGRAMA PRINCIPAL
 
 // global variables
 static float step = 0.5; // advance/retreat step
@@ -138,6 +139,7 @@ static void Resize(int Width, int Height) {
 	glViewport(0, 0, (GLsizei) Width, (GLsizei) Height); // TODO should go to context
 }
 
+// Responsable del dibujado
 static void Render(Camera *theCamera) {
 
 	RenderState *rs = RenderState::instance();
@@ -154,6 +156,7 @@ static void Render(Camera *theCamera) {
 	Scene::instance()->draw();
 }
 
+// Dibuja la escena
 static void Display() {
 
 	Camera *theCamera;
@@ -494,18 +497,27 @@ void mouse(int x, int y) {
 void idle(void) {
 }
 
+// OpenGl espera un evento luego dibuja. Mientras espera un evento, puede hacer una animacion
+// antes de renderizar. 
 void animate(int value) {
+	static float t = 0.0; // vamos a incrementar t hasta un cierto valor y luego decrementar
+	static float inc_t = 0.01;
+	
+	
 	// Set up the next timer tick (do this first)
 	glutTimerFunc(MG_TIMERMSECS, animate, 0);
 
 	// Measure the elapsed time
-	int currTime = glutGet(GLUT_ELAPSED_TIME);
+	int currTime = glutGet(GLUT_ELAPSED_TIME); // tiempo de ejecucion
 	int timeSincePrevFrame = currTime - prevTime;
 	int elapsedTime = currTime - startTime;
 
 	// ##### REPLACE WITH YOUR OWN GAME/APP MAIN CODE HERE #####
 	if (runAnimation) {
 		// Force a redisplay to render the new image
+		
+		t = t + inc_t;
+		RenderState::instance()->setSc(t); // le damos un cierto valor
 
 		glutPostRedisplay();
 	}
