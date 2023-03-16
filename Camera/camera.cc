@@ -189,12 +189,15 @@ void  Camera::lookAt(const Vector3 & E,
 	Vector3 Zc, Xc, Yc;
 	float modi;
 	// calculo vector D, Z de la camara
+	// Zc = F siendo F = (E-At)/(|E-At|)
 	modi = sqrtf( (  pow((E[0]-at[0]),2) + pow((E[1]-at[1]),2) + pow((E[2]-at[2]),2)   )  );
 	Zc = (E-at)/modi;
 	// calculo vector R, X de la camara
-	modi = sqrtf( (   pow((Zc[0]-up[0]),2) + pow((Zc[1]-up[1]),2) + pow((Zc[2]-up[2]),2)  )  );
-	Xc = up.cross(Zc)/modi;
+	// X = (Up / |Up|) x D
+	modi = sqrtf( (   pow((up[0]),2) + pow((up[1]),2) + pow((up[2]),2)  )  );
+	Xc = (up/modi).cross(Zc);
 	// calculo vector U, Y de la camara
+	// Y = D x R
 	Yc = Zc.cross(Xc);
 	
 	m_E = E;

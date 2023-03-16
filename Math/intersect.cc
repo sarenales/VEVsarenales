@@ -32,9 +32,14 @@ int BSpherePlaneIntersect(const BSphere *bs, Plane *pl) {
 	if(distancia <= radio){
 		return IINTERSECT;
 	}
-	else
-		return IREJECT;	
-	
+	else{
+		int ladoPosNeg = pl->whichSide(centro); // -1 si esta lado negativo; 1 positivo y 0 esta sobre el plano	
+		if(ladoPosNeg == -1){
+			return -IREJECT;
+		}else if (ladoPosNeg == 1){
+			return IREJECT;
+		}
+	}
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
@@ -85,52 +90,28 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	
 	zmax = theBBox->m_max.z();
 	zmin = theBBox->m_min.z();
-	/*
-	// si estamos sentido negativo, cambiamos
-	// // EJE X
-	// if( aX < Constants::distance_epsilon){
-		// xmin = theBBox->m_max.x();
-		// xmax = theBBox->m_min.x();
-	// }
-		
-	// // EJE Y
-	// if( bY < Constants::distance_epsilon){
-		// ymin = theBBox->m_max.y();
-		// ymax = theBBox->m_min.y();
-	// }
-	
-	// // EJE Z
-	// if( cZ < Constants::distance_epsilon){
-		// zmin = theBBox->m_max.z();
-		// zmax = theBBox->m_min.z();
-	// }
-	*/
+
 	Vector3 c, e;
 	// calculo el punto medio medio
 	c[0] = (xmax + xmin) *0.5f;
 	c[1] = (ymax + ymin) *0.5f;
 	c[2] = (zmax + zmin) *0.5f;
-	// printf("el centro es (%f, %f, %f)\n", c.x(), c.y(), c.z());
-	
 	
 	e[0] = xmax - c.x();
 	e[1] = ymax - c.y();
 	e[2] = zmax - c.z();
-	//printf("e es (%f, %f, %f)\n", e.x(), e.y(), e.z());
 	
 	// calculamos la distancia entre el centro y el vertice max
 	float p = (e.x()*fabs(aX)) + (e.y()*fabs(bY)) + (e.z()*fabs(cZ)) ;
-	// printf("distancia entre el vertice y el centro %f \n", p);
-	
+
 	
 	// calcula la distancia entre el centro AABB y el plano
-	// float d = thePlane->signedDistance(c);	
 	Vector3 normal;
-	normal[0]	= aX;
+	normal[0] = aX;
 	normal[1] = bY;
 	normal[2] = cZ;
 	float d = c.dot(normal) - (thePlane->signedDistance(c)) ;	
-	// printf("distancia entre el plano y el centro %f \n", d);
+	
 	
 	int ladoPosNeg = thePlane->whichSide(c); // -1 si esta lado negativo; 1 positivo y 0 esta sobre el plano
 
