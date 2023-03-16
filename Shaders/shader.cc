@@ -199,6 +199,8 @@ void ShaderProgram::beforeDraw() {
 // crear serie de variables para q los shader se enteren de lo que van a manejar (informacion del vetice y de la escena)
 // informacion del vertice: atributos , v.uniformes (luces, matrices...), varying
 
+	// pone todas las matrices en variables uniformes
+	// los atributos solo a los vertexshaders!
 
 	Material *mat;
 	Texture *tex;
