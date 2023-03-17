@@ -89,8 +89,19 @@ void Light::placeScene(const Trfm3D & view, const Trfm3D & model) {
 
 	/* =================== PUT YOUR CODE HERE ====================== */
 
-	//modelView.transfromPoint()
-	//modelView.transformVector()
+	// 1 colocar las luces en la escena.
+	if(m_type.getType() == ){
+		
+	}
+	else if(){
+		
+	}
+	else{
+	
+	}
+
+	modelView.transfromPoint();
+	modelView.transformVector();
 	
 	//m_type // hay que mirar que tipo de transform es
 	// no hay que machacar , hay que guardar en positionEye y spotDirectionEye

@@ -1,7 +1,7 @@
 #version 120
 
-varying vec4 f_color;
-varying vec2 f_texCoord;
+varying vec4 f_color; // entrada: color interpolado bilineal para este pixel
+varying vec2 f_texCoord; 
 
 uniform sampler2D texture0;
 
@@ -10,5 +10,5 @@ uniform sampler2D texture0;
 // vec4 texture2D(sampler2D sampler, vec2 coord);
 
 void main() {
-	gl_FragColor = vec4(1.0);
+	gl_FragColor = vec4(f_color); // le doy el color he recibido
 }

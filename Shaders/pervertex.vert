@@ -32,37 +32,56 @@ attribute vec2 v_texCoord;
 varying vec4 f_color;
 varying vec2 f_texCoord;
 
-void main() {
 
-	vec3 L;
-	vect4 posEye4,A,normalEye4;
+float lambertFactor(in vec3 N,in vec3 L){ // funcion
+	float NoL;
+	
+	NoL = max(dot(N,L),0.0);
+	
+	return NoL;
+}
+
+void main() {
+	
+	vec3 L,n;
+	vect4 posEye4,A,normalEye4,n4;
+
+	vec3 difuso = vec3(0.0);
+	difuso = lambertFactor(N, L)*theMaterial.diffuse*theLights[i].diffuse;
+
+	f_color = vec4(scene_ambient, 1.0);
+	f_texCoord = v_texCoord;
+	
+	gl_Position = modelToClipMatrix * vec4(v_position,1);
+	
+	
+	
 	
 	// pasar la posicion del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	
 	posEye4 = modelToCameraMatrix*vec4(v_position,1.0) ; // es un punto
 	
-	
-
 	// pasar la normal del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	
 	normalEye4 = modelToCameraMatrix*vec4(v_position,0.0) ; // es un punto
 	vec3 normalEye = normalize(normalEye4.xyz);
-		
+
 	//FOR para todas las luces
 	for(int i=0; i<active_lights_n;i++){
-	
-	}
+
 		// si es direccional
 		if (theLights[i].position.w == 0){
-			L = normalize(- theLights[i].position.xyz );// vector de 4
+			L = normalize(- theLights[i].position.xyz ); // vector de 4
 			
 			
 		}else{
-		//si  es posiciona o spotlight
+		//si  es posicional o spotlight
 			// vector que va desde el vertice a la posicion de la luz y lo normalizare
 			A = (theLights[i].position - posEye4 );
 			L = normalize(A.xyz);
 		}
+		n4 = modelToCameraMatrix * vec4(v_normal, 0.0);
+		n = normalize(n4.xyz);
 	}
 	gl_Position = modelToClipMatrix * vec4(v_position, 1);
 }
