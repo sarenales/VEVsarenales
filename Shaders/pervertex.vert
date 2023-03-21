@@ -44,18 +44,13 @@ float lambertFactor(in vec3 N,in vec3 L){ // funcion
 void main() {
 	
 	vec3 L,n;
-	vect4 posEye4,A,normalEye4,n4;
+	vec4 posEye4,A,normalEye4,n4;
 
-	vec3 difuso = vec3(0.0);
-	difuso = lambertFactor(N, L)*theMaterial.diffuse*theLights[i].diffuse;
+	//vec3 difuso = vec3(0.0);
+	//difuso = lambertFactor(N, L)*theMaterial.diffuse*theLights[i].diffuse;
 
 	f_color = vec4(scene_ambient, 1.0);
-	f_texCoord = v_texCoord;
-	
-	gl_Position = modelToClipMatrix * vec4(v_position,1);
-	
-	
-	
+	f_texCoord = v_texCoord;	
 	
 	// pasar la posicion del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	

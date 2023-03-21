@@ -141,7 +141,7 @@ private:
 	Vector3  m_diffuse;               // default (0.8, 0.8, 0.8)
 	Vector3  m_specular;              // default (0.0, 0.0, 0.0)
 	Vector3  m_position;              // default (0.0 ,5.0, 0.0);
-										// posicion de la luz a la direccion que apunta a la camara
+										
 									  // Note that, if m_type is directional, the position is in fact a direction.
 	Vector3  m_spotDirection;         // GL_SPOT_DIRECTION : default direction is (sqrt(3)/3, sqrt(3)/3, sqrt(3)/3)
 									  //  significant only when GL_SPOT_CUTOFF is not 180
