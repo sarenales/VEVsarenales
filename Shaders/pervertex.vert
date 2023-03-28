@@ -46,9 +46,7 @@ void main() {
 	vec3 L,n;
 	vec4 posEye4,A,normalEye4,n4;
 
-	//vec3 difuso = vec3(0.0);
-	//difuso = lambertFactor(N, L)*theMaterial.diffuse*theLights[i].diffuse;
-
+	
 	f_color = vec4(scene_ambient, 1.0);
 	f_texCoord = v_texCoord;	
 	
@@ -67,6 +65,10 @@ void main() {
 		// si es direccional
 		if (theLights[i].position.w == 0){
 			L = normalize(- theLights[i].position.xyz ); // vector de 4
+			//vec3 difuso = vec3(0.0);
+			//difuso = lambertFactor(n, L)*theMaterial.diffuse*theLights[i].diffuse;
+
+			
 			
 			
 		}else{

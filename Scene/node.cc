@@ -551,6 +551,20 @@ void Node::setCulled(bool culled) {
 void Node::frustumCull(Camera *cam) {
 	/* =================== PUT YOUR CODE HERE ====================== */
 
+	// comprobar la interseccion para todos los planos
+	// para todos los planos, func(plano,BBox)=dentro
+	// si existe almenos un plano que func(plano,Bbox) = fuera
+	
+	
+	
+	// no es visible, no se dibuja
+	if(m_isCulled(false)) {
+		
+		
+	}
+	
+
+
 	/* =================== END YOUR CODE HERE ====================== */
 }
 

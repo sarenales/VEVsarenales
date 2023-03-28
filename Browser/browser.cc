@@ -75,7 +75,8 @@ static void InitRenderContext(int argc, char** argv,
 	glViewport(0, 0, width, height);         // Viewport Transformation
 
 	// Enable culling
-	glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE)
+	
 	glCullFace(GL_BACK);   // Cull bakface triangles
 	glFrontFace(GL_CCW);   // use counter-clockwise to decide whether triangle is backface
 
@@ -98,7 +99,7 @@ static void InitRenderContext(int argc, char** argv,
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 }
-
+// camara ortografica para ver el frustum
 static void check_cull_camera() {
 	CameraManager * mgr = CameraManager::instance();
 	Camera *theCamera = mgr->find("mainCamera");
@@ -145,18 +146,19 @@ static void Render(Camera *theCamera) {
 	RenderState *rs = RenderState::instance();
 	LightManager *lmgr = LightManager::instance();
 
-	rs->setCamera(theCamera);
+	rs->setCamera(theCamera); 	// coloca la camara
 	// draw the background color
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// colores 
 	rs->loadTrfm(RenderState::projection, theCamera->projectionTrfm());
 	rs->loadTrfm(RenderState::modelview, theCamera->viewTrfm());
 	if (check_cull) check_cull_camera();
 	DisplaySky(theCamera);
 
-	Scene::instance()->draw();
+	Scene::instance()->draw(); 	// se dibuja la escena
 }
 
 // Dibuja la escena
+// espera y renderiza
 static void Display() {
 
 	Camera *theCamera;
