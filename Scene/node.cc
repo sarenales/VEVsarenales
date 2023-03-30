@@ -558,10 +558,10 @@ void Node::frustumCull(Camera *cam) {
 	
 	
 	// no es visible, no se dibuja
-	if(m_isCulled(false)) {
+	//if(m_isCulled(false)) {
 		
 		
-	}
+	//}
 	
 
 

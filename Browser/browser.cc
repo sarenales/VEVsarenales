@@ -75,7 +75,7 @@ static void InitRenderContext(int argc, char** argv,
 	glViewport(0, 0, width, height);         // Viewport Transformation
 
 	// Enable culling
-	glEnable(GL_CULL_FACE)
+	glEnable(GL_CULL_FACE);
 	
 	glCullFace(GL_BACK);   // Cull bakface triangles
 	glFrontFace(GL_CCW);   // use counter-clockwise to decide whether triangle is backface
