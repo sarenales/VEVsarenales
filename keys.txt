@@ -44,3 +44,4 @@ alt-1 -> go to parent node
 alt-2 -> go to first child node
 alt-3 -> go to next sibling
 
+$ ./browser Json/scene_bmap.json 

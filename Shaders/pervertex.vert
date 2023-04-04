@@ -58,19 +58,17 @@ void main() {
 	vec3 L,N,V;
 	vec4 posEye4,A,normalEye4,n4;
 	vec3 i_difuso, i_especular;
-	float M;
-
-	
+	float M;	
 	
 	f_color = vec4(scene_ambient, 1.0);
 	f_texCoord = v_texCoord;	
 	
 	// pasar la posicion del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
-	
-	posEye4 = modelToCameraMatrix*vec4(v_position,1.0) ; // el vertice en el sistema de ref de la camara, punto
+	posEye4 = modelToCameraMatrix*vec4(v_position,1.0) ; // el vertice en el sistema de ref de la camara (punto)
 	V = normalize(posEye4.xyz);
-	// pasar la normal del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	
+	
+	// pasar la normal del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	normalEye4 = modelToCameraMatrix*vec4(v_position,0.0) ; // vector
 	N = normalize(-normalEye4.xyz);
 
@@ -81,8 +79,7 @@ void main() {
 
 		// si es direccional
 		if (theLights[i].position.w == 0){
-			
-			L = normalize(- theLights[i].position.xyz ); // vector de 4
+			L = normalize(- theLights[i].position.xyz );
 			i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse;				
 			i_especular += specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular;
 			
