@@ -42,22 +42,11 @@ float lambertFactor(in vec3 N,in vec3 L){ // funcion
 }
 
 float specular_factor(const vec3 n, const vec3 l, const vec3 v, float m){
-	
-	// ESTO NO ES VERDAD... EL FACTOR ESPECULAR ES SOLAMENTE POW(R.V, m)
-
-	// i = (n*l)*(r*v)^m 
 	float i;
-
 	vec3 r;
-
-	// PUEDES QUITAR PARENTESIS... r = 2.0*dot(n,l)*n-l;
-
 	r = normalize(2.0*dot(n,l)*n-l);
 
-	// TIENES QUE NORMALIZAR R
 
-	// ESTO NO ES LO QUE TIENES QUE CALCULAR.. LO QUE TIENES QUE CALCULAR ES 
-	// POW(R.V, m) SIEMPRE Y CUANDO LA BASE DE LA POTENCIA... R.V (dot) SEA MAYOR QUE CERO
 	if (dot(r,v) > 0.0)
 		i = pow(dot(r,v),m);
 
@@ -90,17 +79,11 @@ void main() {
 	// pasar la posicion del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	posEye4 = modelToCameraMatrix*vec4(v_position,1.0) ; // el vertice en el sistema de ref de la camara (punto)
 
-
-
 	V = normalize(-posEye4.xyz);
 	
 	// pasar la normal del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 
-
-
 	normalEye4 = modelToCameraMatrix*vec4(v_normal,0.0) ; // vector
-
-
 
 	N = normalize(normalEye4.xyz);
 
@@ -114,18 +97,12 @@ void main() {
 			L = normalize(- theLights[i].position.xyz );
 			i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse;	
 
-			// FALTA MULTIPLICAR POR LAMBERTFACTOR()
 
 			i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular;
 			
 		}else{
 		//si  es posicional o spotlight
 			// vector que va desde el vertice a la posicion de la luz y lo normalizare
-
-
-/// AQUI FALTA SABER SI ES POSICIONAL O NO, CALCULAR LA ATENUACION Y CALCULAR SI ESTA DENTRO DEL CONO SI ES SPOTLIGHT
-
-
 			A = (theLights[i].position - posEye4 );
 			L = normalize(A.xyz);
 			// si es posicional
@@ -145,14 +122,9 @@ void main() {
 						i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse*cspot;
 						i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular*cspot;
 					}
-					
 				}
-
-			}
-			
-			
+			}			
 		}
-		
 	}
 	f_color += (vec4 (i_difuso, 1.0)) + (vec4 (i_especular, 1.0));
 	gl_Position = modelToClipMatrix * vec4(v_position, 1.0);
