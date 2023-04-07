@@ -69,9 +69,12 @@ float atenuacion_factor(int i, float d){
 void main() {
 	
 	vec3 L,N,V;
-	vec4 posEye4,A,normalEye4,n4;
+	vec4 posEye4,A,normalEye4;
 	vec3 i_difuso, i_especular;
 	float M,d,cspot,base;	
+	
+	i_difuso = vec3(0.0);
+	i_especular = vec3(0.0);
 	
 	f_color = vec4(scene_ambient, 1.0);
 	f_texCoord = v_texCoord;	
