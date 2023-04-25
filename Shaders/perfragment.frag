@@ -113,4 +113,6 @@ void main() {
         }
     }
     gl_FragColor = vec4(i_difuso + i_especular + scene_ambient*theMaterial.diffuse,1.0);
+	// gl_FragColor = vec4(i_difuso + i_especular + scene_ambient*theMaterial.diffuse,1.0) * text_Color + vec4(specular * theMaterial.specular, theMaterial.alpha);
+ 
 }
