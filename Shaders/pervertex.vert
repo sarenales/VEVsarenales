@@ -43,14 +43,10 @@ float lambertFactor(in vec3 N,in vec3 L){ // funcion
 
 float specular_factor(const vec3 n, const vec3 l, const vec3 v, float m){
 	float i;
-	vec3 r;
-	r = normalize(2.0*dot(n,l)*n-l);
+	vec3 h = normalize(l+v);
+	float d = max(dot(n,h),0.0);
 
-
-	if (dot(r,v) > 0.0)
-		i = pow(dot(r,v),m);
-
-	return max(i,0.0);
+	return pow(d,4*m);
 }
 
 float atenuacion_factor(int i, float d){
@@ -98,9 +94,9 @@ void main() {
 		// si es direccional
 		if (theLights[i].position.w == 0.0){
 			L = normalize(- theLights[i].position.xyz );
+			
+			
 			i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse;	
-
-
 			i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular;
 			
 		}else{
@@ -108,6 +104,7 @@ void main() {
 			// vector que va desde el vertice a la posicion de la luz y lo normalizare
 			A = (theLights[i].position - posEye4 );
 			L = normalize(A.xyz);
+			
 			// si es posicional
 			if (theLights[i].position.w == 1.0){
 				// d distancia del vertice a la luz

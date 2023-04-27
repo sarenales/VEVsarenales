@@ -104,10 +104,7 @@ void Light::placeScene(const Trfm3D & view, const Trfm3D & model) {
 			m_spotDirectionEye = modelView.transformVector(m_spotDirection);
 			m_spotDirectionEye = m_spotDirectionEye.normalize();
 		}
-	}
-
-	
-	
+	}	
 	
 	//m_type // hay que mirar que tipo de transform es
 	// no hay que machacar , hay que guardar en positionEye y spotDirectionEye
