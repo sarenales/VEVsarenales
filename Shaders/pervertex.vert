@@ -93,6 +93,7 @@ void main() {
 
 		// si es direccional
 		if (theLights[i].position.w == 0.0){
+			// vecctor opuesto a la direccion que viaja
 			L = normalize(- theLights[i].position.xyz );
 			
 			
@@ -101,27 +102,24 @@ void main() {
 			
 		}else{
 		//si  es posicional o spotlight
-			// vector que va desde el vertice a la posicion de la luz y lo normalizare
+			// vector que va desde el objeto a la posicion de la luz y lo normalizare
 			A = (theLights[i].position - posEye4 );
 			L = normalize(A.xyz);
 			
 			// si es posicional
 			if (theLights[i].position.w == 1.0){
-				// d distancia del vertice a la luz
+				// d distancia del objto a la luz
 				d = length(A.xyz);
 				i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse*atenuacion_factor(i,d);		
-				i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular;
+				i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular*atenuacion_factor(i,d);
 			}
 			else{
 				// spotlight
 				if (dot(L,theLights[i].spotDir) > theLights[i].cosCutOff){
-					// dentro del cono
-					base = dot(L,theLights[i].spotDir);
-					if (base != 0.0){
-						cspot = pow(base,theLights[i].exponent);
-						i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse*cspot;
-						i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular*cspot;
-					}
+				// dentro del cono
+					cspot = pow(max(dot(-L,theLights[i].spotDir),0.0),theLights[i].exponent);
+					i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse*cspot;
+					i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular*cspot;
 				}
 			}			
 		}

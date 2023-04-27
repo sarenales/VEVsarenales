@@ -37,16 +37,11 @@ float lambertFactor(in vec3 N,in vec3 L){ // funcion
 }
 
 float specular_factor(const vec3 n, const vec3 l, const vec3 v, float m){
-	
-	//  POW(R.V, m)
 	float i;
-	vec3 r;
+	vec3 h = normalize(l+v);
+	float d = max(dot(n,h),0.0);
 
-	r = normalize(2.0*dot(n,l)*n-l);
-	if (dot(r,v) > 0.0)
-		i = pow(dot(r,v),m);
-
-	return max(i,0.0);
+	return pow(d,4*m);
 }
 
 float atenuacion_factor(int i, float d){
@@ -101,13 +96,10 @@ void main() {
             }
             else{
                 // si es spotlight
-                if(dot(L,theLights[i].spotDir) > theLights[i].cosCutOff){
-                    base = dot(L,theLights[i].spotDir);
-                    if (base != 0.0)  {
-                        cspot = pow(base,theLights[i].exponent);                    
-                        i_difuso += lambertFactor(normalEye,L)*theLights[i].diffuse*theMaterial.diffuse*atenuacion_factor(i,d)*base;
-                        i_especular += lambertFactor(normalEye,L)*specular_factor(normalEye,L,V,M)*theLights[i].specular*theMaterial.specular*atenuacion_factor(i,d)*base;
-                    }
+                if(dot(L,theLights[i].spotDir) > theLights[i].cosCutOff){ 
+					cspot = pow(max(dot(-L,theLights[i].spotDir),0.0),theLights[i].exponent);                   
+					i_difuso += lambertFactor(normalEye,L)*theLights[i].diffuse*theMaterial.diffuse*atenuacion_factor(i,d)*cspot;
+					i_especular += lambertFactor(normalEye,L)*specular_factor(normalEye,L,V,M)*theLights[i].specular*theMaterial.specular*atenuacion_factor(i,d)*cspot;
                 }
             }
         }
