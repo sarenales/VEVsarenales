@@ -65,6 +65,13 @@ void main() {
     i_especular = vec3(0.0);
 
 	gl_FragColor = vec4(1.0);
+	
+	
+	
+	
+	
+	
+	
 
     // posicion de la luz en el espacio de la camara
     posEye = f_position;

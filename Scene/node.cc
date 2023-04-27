@@ -413,7 +413,7 @@ void Node::updateWC() {
 	// actualizar las trasnformaciones del padre del nodo
 	
 	// si es nodo raiz entonces
-	if(this->m_parent == 0){
+	if(!m_parent){
 		// igual que la transformacion local
 		this->m_placementWC->clone(this->m_placement);
 	}// si es nodo intermedio o nodo hoja

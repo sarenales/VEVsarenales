@@ -17,6 +17,8 @@ varying vec3 f_normal;        // camera space
 varying vec2 f_texCoord;
 
 void main() {
+	// sin normalizar
+	
 	// posicion de la camara en coordenadas del modelo
 	f_position = (modelToCameraMatrix * vec4(v_position, 1.0)).xyz;
     // direccion de la camara en coordenadas del modelo

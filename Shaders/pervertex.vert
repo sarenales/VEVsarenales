@@ -42,18 +42,18 @@ float lambertFactor(in vec3 N,in vec3 L){ // funcion
 }
 
 float specular_factor(const vec3 n, const vec3 l, const vec3 v, float m){
-	float i;
+	float i = 0.0;
 	vec3 h = normalize(l+v);
 	float d = max(dot(n,h),0.0);
-
-	return pow(d,4*m);
+	if (d>0.0)
+		i = pow(d,4*m);
+	return i;
 }
 
 float atenuacion_factor(int i, float d){
 	// E = I*F(d)
 	// f(d) = 1/ (c + l*d + q*d^2)
 	float f,E;
-	f = 1.0;
 	f = (theLights[i].attenuation.x + theLights[i].attenuation.y*d + theLights[i].attenuation.z*d*d);
 	if (f != 0.0)
 		E = 1.0/f;
@@ -67,7 +67,10 @@ void main() {
 	vec3 L,N,V;
 	vec4 posEye4,A,normalEye4;
 	vec3 i_difuso, i_especular;
-	float M,d,cspot,base;	
+	float M,d,cspot, cosAlpha;	
+	
+	cosAlpha = 0.0;
+	cspot = 0.0;
 	
 	i_difuso = vec3(0.0);
 	i_especular = vec3(0.0);
@@ -77,13 +80,11 @@ void main() {
 	
 	// pasar la posicion del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	posEye4 = modelToCameraMatrix*vec4(v_position,1.0) ; // el vertice en el sistema de ref de la camara (punto)
-
 	V = normalize(-posEye4.xyz);
 	
 	// pasar la normal del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 
 	normalEye4 = modelToCameraMatrix*vec4(v_normal,0.0) ; // vector
-
 	N = normalize(normalEye4.xyz);
 
 	M = theMaterial.shininess;
@@ -96,18 +97,17 @@ void main() {
 			// vecctor opuesto a la direccion que viaja
 			L = normalize(- theLights[i].position.xyz );
 			
-			
 			i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse;	
 			i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular;
 			
 		}else{
 		//si  es posicional o spotlight
 			// vector que va desde el objeto a la posicion de la luz y lo normalizare
-			A = (theLights[i].position - posEye4 );
-			L = normalize(A.xyz);
+			A = (theLights[i].position - posEye4 ); // para luego la atenuacion
+			L = normalize(A.xyz); 	// vector que va del vertice a la luz
 			
 			// si es posicional
-			if (theLights[i].position.w == 1.0){
+			if (theLights[i].cosCutOff == 0.0){
 				// d distancia del objto a la luz
 				d = length(A.xyz);
 				i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse*atenuacion_factor(i,d);		
@@ -115,15 +115,19 @@ void main() {
 			}
 			else{
 				// spotlight
-				if (dot(L,theLights[i].spotDir) > theLights[i].cosCutOff){
+				// ojo con los cosenos
+				cosAlpha = dot(-L,theLights[i].spotDir);
+				if (cosAlpha > theLights[i].cosCutOff){
 				// dentro del cono
-					cspot = pow(max(dot(-L,theLights[i].spotDir),0.0),theLights[i].exponent);
-					i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse*cspot;
-					i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular*cspot;
+					if(cosAlpha > 0.0){ 	// comprobamos que la base no es 0
+						cspot = pow(cosAlpha,theLights[i].exponent);
+						i_difuso += lambertFactor(N,L)*theMaterial.diffuse*theLights[i].diffuse*cspot;
+						i_especular += lambertFactor(N,L)*specular_factor(N,L,V, M)*theMaterial.specular*theLights[i].specular*cspot;
+					}
 				}
 			}			
 		}
 	}
 	f_color += (vec4 (i_difuso, 1.0)) + (vec4 (i_especular, 1.0));
-	gl_Position = modelToClipMatrix * vec4(v_position, 1.0);
+	gl_Position = modelToClipMatrix * vec4(v_position, 1.0); // solo para los vertexshaders
 }
