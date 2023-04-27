@@ -59,18 +59,15 @@ float atenuacion_factor(int i, float d){
 void main() {
 
     vec3 L,N,V,A,normalEye,posEye,i_difuso,i_especular;
-    float M,d,cspot,base;
+    float M,d,cspot,cosAlpha;
+
+	cosAlpha = 0.0;
+	cspot = 0.0;
 
     i_difuso = vec3(0.0);
     i_especular = vec3(0.0);
 
 	gl_FragColor = vec4(1.0);
-	
-	
-	
-	
-	
-	
 	
 
     // posicion de la luz en el espacio de la camara
@@ -95,7 +92,7 @@ void main() {
             // si es posicional o spotlight
             A = (theLights[i].position.xyz - posEye);
             L = normalize(A);
-            if(theLights[i].position.w == 1.0){
+            if(theLights[i].cosCutOff == 0.0){
                 // si es posicional
                 d = length(A);
                 i_difuso += lambertFactor(normalEye,L)*theLights[i].diffuse*theMaterial.diffuse*atenuacion_factor(i,d);
@@ -103,8 +100,9 @@ void main() {
             }
             else{
                 // si es spotlight
-                if(dot(L,theLights[i].spotDir) > theLights[i].cosCutOff){ 
-					cspot = pow(max(dot(-L,theLights[i].spotDir),0.0),theLights[i].exponent);                   
+				cosAlpha = dot(-L, theLights[i].spotDir);
+                if(cosAlpha > theLights[i].cosCutOff){ 
+					cspot = pow(cosAlpha,theLights[i].exponent);                   
 					i_difuso += lambertFactor(normalEye,L)*theLights[i].diffuse*theMaterial.diffuse*atenuacion_factor(i,d)*cspot;
 					i_especular += lambertFactor(normalEye,L)*specular_factor(normalEye,L,V,M)*theLights[i].specular*theMaterial.specular*atenuacion_factor(i,d)*cspot;
                 }
