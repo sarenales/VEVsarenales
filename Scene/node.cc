@@ -555,13 +555,18 @@ void Node::frustumCull(Camera *cam) {
 	// para todos los planos, func(plano,BBox)=dentro
 	// si existe almenos un plano que func(plano,Bbox) = fuera
 	
+	int dist;
+	dist = cam->checkFrustum(this->m_containerWC, 0);
 	
+	if(dist == 0 ){
+		this->setCulled(true);
+	}else if(dist<0){
+		this->setCulled(false);	
+	}else{
+		for(auto & theChild: m_children)
+			theChild->frustumCull(cam);			
+	}
 	
-	// no es visible, no se dibuja
-	// if(m_isCulled(false)) {
-		
-		
-	// }
 	
 
 

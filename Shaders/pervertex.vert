@@ -37,7 +37,6 @@ float lambertFactor(in vec3 N,in vec3 L){ // funcion
 	float NoL;
 	
 	NoL = dot(N,L);
-	
 	return max(NoL,0.0);
 }
 

@@ -37,11 +37,12 @@ float lambertFactor(in vec3 N,in vec3 L){ // funcion
 }
 
 float specular_factor(const vec3 n, const vec3 l, const vec3 v, float m){
-	float i;
+	float i = 0.0;
 	vec3 h = normalize(l+v);
 	float d = max(dot(n,h),0.0);
-
-	return pow(d,4*m);
+	if (d>0.0)
+		i = pow(d,4*m);
+	return i;
 }
 
 float atenuacion_factor(int i, float d){
@@ -109,7 +110,8 @@ void main() {
             }
         }
     }
-    gl_FragColor = vec4(i_difuso + i_especular + scene_ambient*theMaterial.diffuse,1.0);
-	// gl_FragColor = vec4(i_difuso + i_especular + scene_ambient*theMaterial.diffuse,1.0) * text_Color + vec4(specular * theMaterial.specular, theMaterial.alpha);
- 
+   gl_FragColor = vec4((i_difuso + i_especular +scene_ambient),1.0) * texture2D(texture0, f_texCoord);
+	
+	
+	
 }

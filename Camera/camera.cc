@@ -333,6 +333,12 @@ int Camera::checkFrustum(const BBox *theBBox,
 	int res = -1; // by default, BBOX fully inside
 	/* =================== PUT YOUR CODE HERE ====================== */
 
+	for(auto & pl: m_fPlanes){
+		res = BBoxPlaneIntersect(theBBox,pl);
+		if(res > 0 or res == IINTERSECT)
+			break;		
+	}
+
 	/* =================== END YOUR CODE HERE ====================== */
 	return res; // BBox is fully inside the frustum
 }
