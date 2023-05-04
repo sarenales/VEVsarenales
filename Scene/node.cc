@@ -559,10 +559,11 @@ void Node::frustumCull(Camera *cam) {
 	dist = cam->checkFrustum(this->m_containerWC, 0);
 	
 	if(dist == -IREJECT ){ 			// esta del todo dentro
-		this->setCulled(true);
+		this->setCulled(false);
 	}else if(dist == IREJECT){  	// esta del todo fuera
-		this->setCulled(false);	
+		this->setCulled(true);	
 	}else{							// intersecta-> mirar sus hijos
+		m_isCulled=false;
 		for(auto & theChild: m_children)
 			theChild->frustumCull(cam);			
 	}
