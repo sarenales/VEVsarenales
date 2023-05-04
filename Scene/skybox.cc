@@ -23,7 +23,7 @@ using std::string;
 // - Assign material to geometry object gobj
 // - Create a new Node.
 // - Assign shader to node.
-// - Assign geometry object to node.
+// - Assign geometry object to node. (mi cubo)
 // - Set sky node in RenderState.
 //
 // Parameters are:
@@ -68,7 +68,8 @@ void CreateSkybox(GObject *gobj,
 }
 
 // TODO: display the skybox
-//
+// NO ESTAN EN ORDEN
+
 // This function does the following:
 //
 // - Store previous shader
@@ -104,6 +105,19 @@ void DisplaySky(Camera *cam) {
 	if (!skynode) return;
 
 	/* =================== PUT YOUR CODE HERE ====================== */
+
+
+	// Set shader (save previous)
+	if (m_shader != 0) {
+		prev_shader = rs->getShader();
+		rs->setShader(m_shader);
+	}
+
+
+	if (prev_shader != 0) {
+		// restore shader
+		rs->setShader(prev_shader);
+	}
 
 	/* =================== END YOUR CODE HERE ====================== */
 }

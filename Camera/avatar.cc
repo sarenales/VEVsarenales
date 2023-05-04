@@ -66,6 +66,7 @@ bool Avatar::advance(float step) {
 		return false;
 	}
 
+
 	/* =================== END YOUR CODE HERE ====================== */
 	// no collision
 	return true;

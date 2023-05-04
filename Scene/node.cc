@@ -358,29 +358,19 @@ void Node::propagateBBRoot() {
 void Node::updateBB () {
 	/* =================== PUT YOUR CODE HERE ====================== */
 	//Precondicion: m_placement tiene que estar bien hecha y los BBox de los hijos tambn bien adaptados.
-	// m_containerWC -> BBox in world coordinates
-	
+		
 	// si es nodo hoja (objeto)
 	if(m_gObject){
-		// BBox bb;
-		// bb = m_gObject->getContainer();
-		// bb = transform(this->m_placementWC);
-		//this->m_containerWC->clone(bb);
-		
-		
 		// primero clonamos el container del objeto
 		this->m_containerWC->clone(m_gObject->getContainer());
-		
 		// transformarlo con la matriz m_placementWC
 		this->m_containerWC->transform(m_placementWC);
-		
-		
 	} // intermedio
 	else{
 		this->m_containerWC->init();
 		// union de sus hijos recorriendo
 		for(auto & theChild : m_children) {
-			this->m_containerWC->include(theChild->m_containerWC); //  Change BBox so that it also includes BBox B
+			this->m_containerWC->include(theChild->m_containerWC); 
 		}
 	}
 
@@ -426,16 +416,6 @@ void Node::updateWC() {
 			theChild->updateWC();
 	}
 	this->updateBB();
-	
-	// si este_nodo_es_la_raiz{
-		// m_placementWC<- this->placement;
-	// sino	// composicion de transformacion la de su padre con la localT
-		// m_placementWC <- composicion de transformacion la del su padre con la local
-		// if(m_gObject == 0){ // NODO INTERMEDIO
-			// for(auto & theChild : m_children) {
-				// theChild->updateWC();
-			// }
-		// }
 	
 	/* =================== END YOUR CODE HERE ====================== */
 }
@@ -598,7 +578,7 @@ const Node *Node::checkCollision(const BSphere *bsph) const {
 		//si intersecta
 		if(BSphereBBoxIntersect(bsph, this->m_containerWC) == IINTERSECT){
 			for(auto & theChild : m_children) {
-				if(theChild->checkCollision(bsph) != IINTERSECT)
+				if(theChild->checkCollision(bsph) != 0)
 					return theChild;
 			}	
 		}

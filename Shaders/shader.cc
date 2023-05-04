@@ -272,6 +272,9 @@ void ShaderProgram::beforeDraw() {
 				this->send_uniform("bumpmap", Constants::gl_texunits::bump);
 			}
 		}
+		if(this->has_capability("env_map")){
+			
+		}
 	}
 	
 }
