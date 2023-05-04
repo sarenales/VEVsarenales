@@ -578,7 +578,7 @@ const Node *Node::checkCollision(const BSphere *bsph) const {
 		//si intersecta
 		if(BSphereBBoxIntersect(bsph, this->m_containerWC) == IINTERSECT){
 			for(auto & theChild : m_children) {
-				if(theChild->checkCollision(bsph) != 0)
+				if(theChild->checkCollision(bsph) != IINTERSECT)
 					return theChild;
 			}	
 		}
