@@ -106,7 +106,7 @@ void DisplaySky(Camera *cam) {
 
 	/* =================== PUT YOUR CODE HERE ====================== */
 
-
+/*
 	// Set shader (save previous)
 	if (m_shader != 0) {
 		prev_shader = rs->getShader();
@@ -118,6 +118,6 @@ void DisplaySky(Camera *cam) {
 		// restore shader
 		rs->setShader(prev_shader);
 	}
-
+*/
 	/* =================== END YOUR CODE HERE ====================== */
 }

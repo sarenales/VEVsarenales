@@ -112,15 +112,20 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	normal[2] = cZ;
 	float d = c.dot(normal) - (thePlane->signedDistance(c)) ;	
 	
-	
-	int ladoPosNeg = thePlane->whichSide(c); // -1 si esta lado negativo; 1 positivo y 0 esta sobre el plano
+	/*
+	  - 0  point lies on the plane
+	  - +1 point lies outside the plane (possitive side)
+	  - -1 point lies inside the plane (negative side)	 
+	*/
+	int ladoPosNeg = thePlane->whichSide(c); 
+
 
 	if(fabs(d)<=p){
 		return IINTERSECT;
 	}else{
-		if(ladoPosNeg == -1){
+		if(ladoPosNeg == -1){			// esta dentro 
 			return -IREJECT;
-		}else if (ladoPosNeg == 1){
+		}else if (ladoPosNeg == 1){		// esta fuera
 			return IREJECT;
 		}
 	}
