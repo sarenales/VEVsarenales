@@ -184,22 +184,16 @@ void Camera::updateFrame () {
 void  Camera::lookAt(const Vector3 & E,
 					 const Vector3 & at,
 					 const Vector3 & up) {
-	/* =================== PUT YOUR CODE HERE ====================== */
+	/* =================== PUT YOUR CODE HERE ====================== */	
 	
 	Vector3 Zc, Xc, Yc;
-	float modi;
-	// calculo vector D, Z de la camara
-	// Zc = F siendo F = (E-At)/(|E-At|)
-	modi = sqrtf( (  pow((E[0]-at[0]),2) + pow((E[1]-at[1]),2) + pow((E[2]-at[2]),2)   )  );
-	if(modi!=0)	
-		Zc = (E-at)/modi;
-	// calculo vector R, X de la camara
-	// X = (Up / |Up|) x D
+	//calculo vector D, Z de la camara
+	Zc = (E-at).normalize();
+
+	//calculo vector R, X de la camara	
+	Xc = ((up).normalize()).cross(Zc);
 	
-	modi = sqrtf( (   pow((up[0]),2) + pow((up[1]),2) + pow((up[2]),2)  )  );
-	Xc = (up/modi).cross(Zc);
-	// calculo vector U, Y de la camara
-	// Y = D x R
+	//calculo vector U, Y de la camara
 	Yc = Zc.cross(Xc);
 	
 	m_E = E;
