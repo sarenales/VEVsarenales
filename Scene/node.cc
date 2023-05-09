@@ -286,7 +286,7 @@ void Node::addChild(Node *theChild) {
 		// anadir en la lista de hijos
 		this->m_children.push_back(theChild);	
 
-		theChild->updateGS();		
+		updateGS();		
 		
 		/* =================== END YOUR CODE HERE ====================== */
 

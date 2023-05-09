@@ -71,7 +71,7 @@ int  BBoxBBoxIntersect(const BBox *bba, const BBox *bbb ) {
 
 int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	/* =================== PUT YOUR CODE HERE ====================== */
-
+/*
 	// ecuacion del plano: ax+by+c+d=0 donde n=(a,b,c)
 	
 	// componentes de la normal
@@ -111,12 +111,6 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 	normal[1] = bY;
 	normal[2] = cZ;
 	float d = c.dot(normal) - (thePlane->signedDistance(c)) ;	
-	
-	/*
-	  - 0  point lies on the plane
-	  - +1 point lies outside the plane (possitive side)
-	  - -1 point lies inside the plane (negative side)	 
-	*/
 	int ladoPosNeg = thePlane->whichSide(c); 
 
 
@@ -130,8 +124,46 @@ int  BBoxPlaneIntersect (const BBox *theBBox, Plane *thePlane) {
 		}
 	}
 	
+*/
 
-
+	Vector3 min;
+	Vector3 max;
+	
+	if(thePlane->m_n.x()>0){
+		min.x() = theBBox->m_min.x();
+		max.x() = theBBox->m_max.x();
+	}else{
+		min.x() = theBBox->m_max.x();
+		max.x() = theBBox->m_min.x();		
+	}
+	
+	if(thePlane->m_n.y()>0){
+		min.y() = theBBox->m_min.y();
+		max.y() = theBBox->m_max.y();
+	}else{
+		min.y() = theBBox->m_max.y();
+		max.y() = theBBox->m_min.y();		
+	}
+	
+	if(thePlane->m_n.z()>0){
+		min.z() = theBBox->m_min.z();
+		max.z() = theBBox->m_max.z();
+	}else{
+		min.z() = theBBox->m_max.z();
+		max.z() = theBBox->m_min.z();		
+	}
+	
+	int ladoMin = thePlane->whichSide(min);
+	int ladoMax = thePlane->whichSide(max);
+	
+	if(ladoMin == ladoMax){
+		if(ladoMin > 0) return +IREJECT;
+		else return -IREJECT;
+	}else{
+		return IINTERSECT;
+	}
+	
+	
 	/* =================== END YOUR CODE HERE ====================== */
 }
 
