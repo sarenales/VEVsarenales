@@ -519,7 +519,8 @@ void animate(int value) {
 		// Force a redisplay to render the new image
 		
 		t = t + inc_t;
-		RenderState::instance()->setSc(t); // le damos un cierto valor
+		// RenderState::instance()->setSc(t); 
+		RenderState::instance()->setuCloudOffset(t); 
 
 		glutPostRedisplay();
 	}

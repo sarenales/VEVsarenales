@@ -341,7 +341,7 @@ int Camera::checkFrustum(const BBox *theBBox,
 
 	if(res != IREJECT){
 		if(interseccion){
-			res = 0;		// intersecta
+			res = 0;			// intersecta
 		}else{
 			res = -1;			// esta dentro
 		}			

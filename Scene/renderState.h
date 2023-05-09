@@ -208,7 +208,11 @@ public:
 	void setSc(float v);
 
 
-
+	///////////////////////////////////////////////////////
+	// Funciones para el movimiento de las nubes //
+	///////////////////////////////////////////////////////
+	float getuCloudOffset() const;
+	void setuCloudOffset(float v);
 
 	void print() const;
 
@@ -256,5 +260,8 @@ private:
 	
 	// variable para el ejemplo del shader de animacion
 	float m_sc;
+
+	//movimiento de las nubes
+	float m_uCloudOffset;
 	
 };

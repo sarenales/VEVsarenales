@@ -247,8 +247,13 @@ void ShaderProgram::beforeDraw() {
 	this->send_uniform("active_lights_n", i);
 
 	// ...
-	if (this->has_capability("sc")) { // si este shader tiene la capacidad sc, me pondra en la variable sc el valor.
-		this->send_uniform("sc", rs->getSc());
+	if (this->has_capability("multitexture")) { // si este shader tiene la capacidad sc, me pondra en la variable sc el valor.
+		tex = mat->getTexture();
+		if(tex!=0){
+			tex->bindGLUnit(Constants::gl_texunits::rest);
+			this->send_uniform("texture1", rs->getSc());
+			this->send_uniform("multitexture", rs->getuCloudOffset());
+		}
 	}
 
 

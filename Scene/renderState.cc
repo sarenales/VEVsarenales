@@ -15,7 +15,9 @@ RenderState::RenderState() :
 	m_ambient(Vector3(0.05f, 0.05f, 0.05)),
 	m_activeShader(0),
 	m_drawBBox(false),
-	m_sc(1.0f)	{} // hay que darle valor cuando se crea una instancia
+	m_sc(1.0f),	 // hay que darle valor cuando se crea una instancia
+	m_uCloudOffset(0.0f){}
+
 
 RenderState::~RenderState() {}
 
@@ -219,6 +221,16 @@ float RenderState::getSc() const{
 }
 void RenderState::setSc(float v){
 	m_sc = v;
+}
+
+///////////////////////////////////////////////////////
+// Funciones para el movimiento de las nubes //
+///////////////////////////////////////////////////////
+float RenderState::getuCloudOffset() const{
+	return m_uCloudOffset;
+}
+void RenderState::setuCloudOffset(float v){
+	m_uCloudOffset = v;
 }
 
 

@@ -284,7 +284,7 @@ void Node::addChild(Node *theChild) {
 		
 		// m_children es un pointer a la lista de child
 		// anadir en la lista de hijos
-		m_children.push_front(theChild);	
+		this->m_children.push_back(theChild);	
 
 		theChild->updateGS();		
 		

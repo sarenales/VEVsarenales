@@ -15,5 +15,7 @@ void main() {
 	//
 	// color = 0.5 * color_of_texture0 + 0.5 * color_of_texture1
 
-	gl_FragColor = vec4(1.0);
+	gl_FragColor = 0.5*f_color*texture2D(texture0, f_texCoord) + 0.5*f_color*texture2D(texture1, f_texCoord) ; 
+	
+
 }
