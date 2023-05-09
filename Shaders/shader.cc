@@ -249,7 +249,7 @@ void ShaderProgram::beforeDraw() {
 	// ...
 	if (this->has_capability("multitexture")) { // si este shader tiene la capacidad sc, me pondra en la variable sc el valor.
 		tex = mat->getTexture();
-		if(tex!=0){
+		if(tex!=0){ // mirar si tiene ese material
 			tex->bindGLUnit(Constants::gl_texunits::rest);
 			this->send_uniform("texture1", rs->getSc());
 			this->send_uniform("multitexture", rs->getuCloudOffset());
