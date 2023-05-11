@@ -14,8 +14,12 @@ void main() {
 	// textures with a factor of 0.5, e.g:
 	//
 	// color = 0.5 * color_of_texture0 + 0.5 * color_of_texture1
-
-	gl_FragColor = 0.5*f_color*texture2D(texture0, f_texCoord) + 0.5*f_color*texture2D(texture1, f_texCoord) ; 
 	
+	vec2 coordDesplazada = f_texCoord; // + uCloudOffset ;
+	coordDesplazada.s+=uCloudOffset ;
+
+	gl_FragColor = 0.5*f_color*texture2D(texture0, f_texCoord) + 
+						0.5*f_color*texture2D(texture1, coordDesplazada) ; 
+	//gl_FragColor = vec4(uCloudOffset, 0.0, 0.0, 1.0); // Cuando no se que hacer
 
 }

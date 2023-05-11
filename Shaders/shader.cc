@@ -206,6 +206,7 @@ void ShaderProgram::beforeDraw() {
 	Texture *tex;
 	RenderState *rs = RenderState::instance();
 	static char buffer[1024];
+	
 
 	this->send_uniform("modelToCameraMatrix", rs->top(RenderState::modelview));
 	this->send_uniform("modelToWorldMatrix", rs->top(RenderState::model));
@@ -246,7 +247,7 @@ void ShaderProgram::beforeDraw() {
 	}
 	this->send_uniform("active_lights_n", i);
 
-	// ...
+/*	// ...
 	if (this->has_capability("multitexture")) { // si este shader tiene la capacidad sc, me pondra en la variable sc el valor.
 		tex = mat->getTexture();
 		if(tex!=0){ // mirar si tiene ese material
@@ -255,7 +256,7 @@ void ShaderProgram::beforeDraw() {
 			this->send_uniform("multitexture", rs->getuCloudOffset());
 		}
 	}
-
+*/
 
 	mat = rs->getFrontMaterial();
 	if (mat != 0) {
@@ -277,8 +278,14 @@ void ShaderProgram::beforeDraw() {
 				this->send_uniform("bumpmap", Constants::gl_texunits::bump);
 			}
 		}
-		if(this->has_capability("env_map")){
-			
+		if(this->has_capability("multitex")){
+			tex = mat->getTexture(1);
+			if(tex!=0){
+				tex->bindGLUnit(Constants::gl_texunits::rest);
+				this->send_uniform("texture1", Constants::gl_texunits::rest);
+				this->send_uniform("uCloudOffset", rs->getuCloudOffset());
+				// printf("llego aqui %6.3f\n", rs->getuCloudOffset());
+			}
 		}
 	}
 	
