@@ -52,7 +52,8 @@ void CreateSkybox(GObject *gobj,
 		fprintf(stderr, "[E] Skybox: no sky shader\n");
 		exit(1);
 	}
-	Texture *ctex = TextureManager::instance()->find(ctexname);
+	Texture *ctex = TextureManager::instance()->find(ctexname);		// textura del cubemap
+	
 	if (!ctex) {
 		fprintf(stderr, "[E] Cubemap texture '%s' not found\n", ctexname.c_str());
 		std::string S;
@@ -63,6 +64,27 @@ void CreateSkybox(GObject *gobj,
 		exit(1);
 	}
 	/* =================== PUT YOUR CODE HERE ====================== */
+
+	// crear el nuevo material
+	Material *Materialsky = MaterialManager::instance()->create("skyMaterial");
+	
+	// asignar la textura del subemap al material
+	Materialsky->setTexture(ctex);
+	
+	// asignar material al objeto geometrico gobj
+	gobj->setMaterial(Materialsky);
+	
+	// creamos el nuevo nodo
+	Node *nodesky = NodeManager::instance()->create("skynode");
+	
+	// asignamos el shader al nodo. El shader me pasan por paramtro
+	nodesky->attachShader(skyshader);
+	
+	// asignamos el objeto geometrico al nodo (mi cubo)
+	nodesky->attachGobject(gobj);
+	
+	// metemos en el renderstate
+	RenderState::instance()->setSkybox(nodesky);
 
 	/* =================== END YOUR CODE HERE ====================== */
 }
@@ -106,6 +128,38 @@ void DisplaySky(Camera *cam) {
 
 	/* =================== PUT YOUR CODE HERE ====================== */
 
+	// funcion que dibuja el cielo
+	// antes de renderizar la escena se llama a esta funcion
+	// se coloca el objeto cielo en el origen del sistm de coord de la cam 
+	// y luego dibuja el objgeo
+	
+	
+	// primero guardamos el shader
+	ShaderProgram *s = rs->getShader();
+
+	// movemos el skybox a la pos de la cam, asi esta rodeada la cam
+	Trfm3D transformacionCamara;
+	Vector3 posicionCam = cam->getPosition();
+	rs->push(RenderState::modelview);
+	rs->addTrfm(RenderState::modelview, &transformacionCamara);
+	
+	
+	// deshabilitar depth test
+	glDisable(GL_DEPTH_TEST);
+	
+	// habilitar el skybox shader
+	rs->setShader(skynode->getShader());
+	
+	// dibujar el objgeo
+	skynode->getGobject()->draw();
+	rs->pop(RenderState::modelview);
+	
+	// habilitamos el depth shader
+	glEnable(GL_DEPTH_TEST);
+	
+	// ponemos el shader de antes
+	rs->setShader(s);
+	
 /*
 	// Set shader (save previous)
 	if (m_shader != 0) {

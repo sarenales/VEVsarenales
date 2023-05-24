@@ -82,7 +82,6 @@ void main() {
 	V = normalize(-posEye4.xyz);
 	
 	// pasar la normal del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
-
 	normalEye4 = modelToCameraMatrix*vec4(v_normal,0.0) ; // vector
 	N = normalize(normalEye4.xyz);
 
