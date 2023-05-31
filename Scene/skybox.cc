@@ -140,6 +140,7 @@ void DisplaySky(Camera *cam) {
 	// movemos el skybox a la pos de la cam, asi esta rodeada la cam
 	Trfm3D transformacionCamara;
 	Vector3 posicionCam = cam->getPosition();
+	transformacionCamara.setTrans(posicionCam);
 	rs->push(RenderState::modelview);
 	rs->addTrfm(RenderState::modelview, &transformacionCamara);
 	
@@ -160,18 +161,6 @@ void DisplaySky(Camera *cam) {
 	// ponemos el shader de antes
 	rs->setShader(s);
 	
-/*
-	// Set shader (save previous)
-	if (m_shader != 0) {
-		prev_shader = rs->getShader();
-		rs->setShader(m_shader);
-	}
 
-
-	if (prev_shader != 0) {
-		// restore shader
-		rs->setShader(prev_shader);
-	}
-*/
 	/* =================== END YOUR CODE HERE ====================== */
 }

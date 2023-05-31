@@ -495,6 +495,7 @@ void Node::draw() {
 	if (this->m_gObject){
 		// lo mismo que glLoadItentity
 		rs->push(RenderState::modelview);
+		rs->loadTrfm(RenderState::model, m_placementWC);
 		// meter a transformacion
 		rs->addTrfm(RenderState::modelview, m_placementWC);	// T -> transformacion asociada al nodo ->m_placement (local)
 		// para dibujar el objeto

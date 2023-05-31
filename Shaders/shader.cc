@@ -247,16 +247,6 @@ void ShaderProgram::beforeDraw() {
 	}
 	this->send_uniform("active_lights_n", i);
 
-/*	// ...
-	if (this->has_capability("multitexture")) { // si este shader tiene la capacidad sc, me pondra en la variable sc el valor.
-		tex = mat->getTexture();
-		if(tex!=0){ // mirar si tiene ese material
-			tex->bindGLUnit(Constants::gl_texunits::rest);
-			this->send_uniform("texture1", rs->getSc());
-			this->send_uniform("multitexture", rs->getuCloudOffset());
-		}
-	}
-*/
 
 	mat = rs->getFrontMaterial();
 	if (mat != 0) {
@@ -287,7 +277,22 @@ void ShaderProgram::beforeDraw() {
 				// printf("llego aqui %6.3f\n", rs->getuCloudOffset());
 			}
 		}
-	}
+		tex = TextureManager::instance()->find("CubeEnv");
+		if(tex!=0 && this->has_capability("cube_env")){
+				// activar textura
+				tex->bindGLUnit(Constants::gl_texunits::envmap);
+				// asignar valor textura a envmap
+				this->send_uniform("envmap", Constants::gl_texunits::envmap);
+				// asignar posicion cam a campos
+				this->send_uniform("campos", rs->getCamera()->getPosition());
+		
+		}
+
+		
+	}	
+	
+	
+	
 	
 }
 

@@ -2,7 +2,7 @@
 
 attribute vec3 v_position;
 attribute vec3 v_normal;
-attribute vec2 v_texCoord;
+attribute vec2 v_texCoord; 
 
 uniform int active_lights_n; // Number of active lights (< MG_MAX_LIGHT)
 

@@ -6,8 +6,12 @@
 attribute vec3 v_position;
 attribute vec3 v_normal;
 attribute vec2 v_texCoord;
-attribute vec3 v_TBN_t;
-attribute vec3 v_TBN_b;
+attribute vec3 v_TBN_t; // vector tangente
+attribute vec3 v_TBN_b; // vector binormal
+
+// TBN = tangente + binormal + normal
+
+// TBN -> TBNcc --(M tangente)-->TBN
 
 uniform mat4 modelToCameraMatrix;
 uniform mat4 modelToWorldMatrix;
