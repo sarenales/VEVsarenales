@@ -40,5 +40,23 @@ varying vec3 f_lightDirection[4]; // tangent space
 varying vec3 f_spotDirection[4];  // tangent space
 
 void main() {
+ 	vec3 tangentePosition, tangenteLightPosition;
+	vec4 T,B,N;
+	mat4 TBN;
+	float cosAlpha;
+	cosAlpha = 0.0;
+	T = modelToCameraMatrix * vec4(v_TBN_t,0.0);
+    B = modelToCameraMatrix * vec4(v_TBN_b,0.0);
+   	N = modelToCameraMatrix * vec4(v_normal,0.0);
+   	TBN = mat4(T, B, N, vec4(0.0, 0.0, 0.0, 1.0));
+	
+	
+	tangentePosition = (cameraToClipMatrix * modelToCameraMatrix * vec4(v_position, 1.0)).xyz;
+	f_viewDirection = - tangentePosition;
+	f_texCoord = v_texCoord;
 	gl_Position = modelToClipMatrix * vec4(v_position, 1.0);
+
+ 
+
+	
 }

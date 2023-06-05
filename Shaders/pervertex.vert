@@ -79,7 +79,7 @@ void main() {
 	
 	// pasar la posicion del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	posEye4 = modelToCameraMatrix*vec4(v_position,1.0) ; // el vertice en el sistema de ref de la camara (punto)
-	V = normalize(-posEye4.xyz);
+	V = normalize(posEye4.xyz);
 	
 	// pasar la normal del vertice del sistema de coordenadas del modelo al sistema del modelo de la camara
 	normalEye4 = modelToCameraMatrix*vec4(v_normal,0.0) ; // vector

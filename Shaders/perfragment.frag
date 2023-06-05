@@ -103,9 +103,11 @@ void main() {
                 // si es spotlight
 				cosAlpha = dot(-L, theLights[i].spotDir);
                 if(cosAlpha > theLights[i].cosCutOff){ 
-					cspot = pow(cosAlpha,theLights[i].exponent);                   
-					i_difuso += lambertFactor(normalEye,L)*theLights[i].diffuse*theMaterial.diffuse*atenuacion_factor(i,d)*cspot;
-					i_especular += lambertFactor(normalEye,L)*specular_factor(normalEye,L,V,M)*theLights[i].specular*theMaterial.specular*atenuacion_factor(i,d)*cspot;
+					if(cosAlpha > 0.0) {
+						cspot = pow(cosAlpha,theLights[i].exponent);                   
+						i_difuso += lambertFactor(normalEye,L)*theLights[i].diffuse*theMaterial.diffuse*atenuacion_factor(i,d)*cspot;
+						i_especular += lambertFactor(normalEye,L)*specular_factor(normalEye,L,V,M)*theLights[i].specular*theMaterial.specular*atenuacion_factor(i,d)*cspot;
+					}
                 }
             }
         }
